@@ -1,6 +1,8 @@
 package by.itacademy.database.entity;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,16 +35,16 @@ public class Part implements BaseEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "part_number")
+    @Column(name = "part_number", nullable = false)
     private String partNumber;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "sort")
+    @Column(name = "sort", nullable = false)
     private String sort;
 
     @Column(name = "create_part_date", nullable = false)
@@ -49,10 +52,12 @@ public class Part implements BaseEntity<Integer> {
 
     @OneToOne
     @JoinColumn(name = "create_user_id", nullable = false)
-    private User user;
+    private User partUser;
 
     @ManyToOne
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    @OneToMany(mappedBy = "parts")
+    private Set<DocPart> docParts = new HashSet<>();
 }

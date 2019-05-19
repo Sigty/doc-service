@@ -56,7 +56,8 @@ CREATE TABLE doc_service.project
 CREATE TABLE doc_service.user_project
 (
     user_id    INTEGER REFERENCES doc_service.user (id),
-    project_id INTEGER REFERENCES doc_service.project (id)
+    project_id INTEGER REFERENCES doc_service.project (id),
+    PRIMARY KEY (user_id, project_id)
 );
 
 CREATE TABLE doc_service.document
@@ -88,8 +89,9 @@ CREATE TABLE doc_service.part
 
 CREATE TABLE doc_service.doc_part
 (
-    part_id       INTEGER REFERENCES doc_service.part (id),
     doc_id        INTEGER REFERENCES doc_service.document (id),
-    quantity_part INTEGER NOT NULL
+    part_id       INTEGER REFERENCES doc_service.part (id),
+    quantity_part INTEGER NOT NULL,
+    PRIMARY KEY (doc_id, part_id)
 );
 

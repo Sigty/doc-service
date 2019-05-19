@@ -40,5 +40,5 @@ public class UserDetail implements BaseEntity<Integer> {
 
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
-    private Department department;
+    private Department departments;
 }
