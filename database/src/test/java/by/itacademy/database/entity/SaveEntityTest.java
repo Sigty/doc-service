@@ -63,8 +63,8 @@ public class SaveEntityTest {
             Role manager = new Role("manager");
             Department QA = new Department("QA");
             Department DEV = new Department("DEV");
-            UserDetail detailSveta = new UserDetail( "Sveta", "Svtlova", "qe@e", DEV);
-            UserDetail detailJoo = new UserDetail( "Joo", "Ra", "ex@qwe", QA);
+            UserDetail detailSveta = new UserDetail("Sveta", "Svtlova", "qe@e", DEV);
+            UserDetail detailJoo = new UserDetail("Joo", "Ra", "ex@qwe", QA);
             User Sveta = new User("svet", "pass", roleUser, detailSveta);
             User Jo = new User("jojo", "qwe123", manager, detailJoo);
             Set<User> mercuryUser = new HashSet<>();
