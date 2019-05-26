@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString(of = {"id", "login", "password", "roles", "userDetail"})
+@ToString(of = {"id", "login", "password", "role", "userDetail"})
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,7 +44,7 @@ public class User implements BaseEntity<Integer> {
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
-    private Role roles;
+    private Role role;
 
     @OneToOne
     @JoinColumn(name = "detail_user_id")
@@ -62,17 +62,17 @@ public class User implements BaseEntity<Integer> {
             inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Project> projects = new HashSet<>();
 
-    public User(String login, String password, Role roles, UserDetail userDetail) {
+    public User(String login, String password, Role role, UserDetail userDetail) {
         this.login = login;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
         this.userDetail = userDetail;
     }
 
-    public User(String login, String password, Role roles, UserDetail userDetail, Set<Project> projects) {
+    public User(String login, String password, Role role, UserDetail userDetail, Set<Project> projects) {
         this.login = login;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
         this.userDetail = userDetail;
         this.projects = projects;
     }

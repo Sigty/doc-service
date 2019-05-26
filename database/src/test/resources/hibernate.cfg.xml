@@ -27,7 +27,6 @@
         <mapping class="by.itacademy.database.entity.DocPart"/>
         <mapping class="by.itacademy.database.entity.Detail"/>
         <mapping class="by.itacademy.database.entity.Assembly"/>
-        <mapping class="by.itacademy.database.entity.DocPart$Id"/>
 
     </session-factory>
 </hibernate-configuration>

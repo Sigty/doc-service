@@ -69,7 +69,7 @@ CREATE TABLE doc_service.part
     description      VARCHAR(128)                             NOT NULL,
     type             VARCHAR(32)                              NOT NULL,
     sort             VARCHAR(16)                              NOT NULL,
-    create_part_date timestamp                                NOT NULL,
+    create_part_date TIMESTAMP WITH TIME ZONE                 NOT NULL,
     create_user_id   INTEGER REFERENCES doc_service.user (id) NOT NULL,
     manufacturer_id  INTEGER REFERENCES doc_service.manufacturer (id)
 );
@@ -77,8 +77,8 @@ CREATE TABLE doc_service.part
 CREATE TABLE doc_service.document
 (
     id              SERIAL PRIMARY KEY,
-    number          VARCHAR(32) UNIQUE NOT NULL,
-    create_doc_date timestamp          NOT NULL,
+    number          VARCHAR(32) UNIQUE       NOT NULL,
+    create_doc_date TIMESTAMP WITH TIME ZONE NOT NULL,
     type_doc_id     INTEGER REFERENCES doc_service.doc_type (id),
     user_id         INTEGER REFERENCES doc_service.user (id)
 );

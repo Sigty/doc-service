@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"docId", "partId"})
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "doc_part", schema = "doc_service")
 public class DocPart implements BaseEntity<DocPart.Id> {
@@ -40,7 +40,6 @@ public class DocPart implements BaseEntity<DocPart.Id> {
     @AllArgsConstructor
     @EqualsAndHashCode(of = {"docId", "partId"})
     @Embeddable
-    @Table(name = "doc_part", schema = "doc_service")
     public static class Id implements Serializable {
 
         @Column(name = "doc_id")

@@ -12,10 +12,7 @@ import by.itacademy.database.entity.Project;
 import by.itacademy.database.entity.Role;
 import by.itacademy.database.entity.User;
 import by.itacademy.database.entity.UserDetail;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -47,10 +44,8 @@ public class UserTestDataImport {
             User Jo = saveUser(session, "jojo", "qwe123", manager, detailJoo);
             Manufacturer murata = saveManufacturer(session, "murata");
             Manufacturer td = saveManufacturer(session, "td");
-            ZonedDateTime dataFirst = ZonedDateTime.of(LocalDate.parse("2017-02-03"), LocalTime.parse("12:30:30"),
-                    ZoneId.systemDefault());
-            ZonedDateTime dataLast = ZonedDateTime.of(LocalDate.parse("2017-02-03"), LocalTime.parse("12:30:30"),
-                    ZoneId.systemDefault());
+            OffsetDateTime dataFirst = OffsetDateTime.parse("2019-05-03T01:02:03Z");
+            OffsetDateTime dataLast = OffsetDateTime.parse("2019-05-03T01:02:03Z");
             Part firsPart = savePart(session, 1, "GRM188R71C104KA01D", "0.1 uF_10%_16V_X7R_0603",
                     "cap", "c", dataFirst, Sveta, murata);
             Part lastPart = savePart(session, 2, "RK73B1JTTD333J", "33k_5%_0.1W_0603",
@@ -71,7 +66,7 @@ public class UserTestDataImport {
             Set<User> marsUser = new HashSet<>();
             marsUser.add(allPetr);
             marsUser.add(allKate);
-            Project mars = saveProjectAll(session,"mars", marsUser);
+            Project mars = saveProjectAll(session, "mars", marsUser);
         }
     }
 
@@ -81,7 +76,7 @@ public class UserTestDataImport {
         return docPart;
     }
 
-    private Document saveDocement(Session session, Integer id, String number, ZonedDateTime createDocDate, User docUser,
+    private Document saveDocement(Session session, Integer id, String number, OffsetDateTime createDocDate, User docUser,
                                   DocType docType) {
         Document document = Document.builder()
                 .id(id)
@@ -107,7 +102,7 @@ public class UserTestDataImport {
     }
 
     private Part savePart(Session session, Integer id, String partNumber, String description, String type,
-                          String sort, ZonedDateTime createPartDate, User partUser, Manufacturer manufacturer) {
+                          String sort, OffsetDateTime createPartDate, User partUser, Manufacturer manufacturer) {
         Part part = Part.builder()
                 .id(id)
                 .partNumber(partNumber)

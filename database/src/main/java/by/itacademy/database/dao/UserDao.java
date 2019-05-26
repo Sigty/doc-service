@@ -24,10 +24,8 @@ public class UserDao {
         try (Session session = factory.openSession()) {
             log.debug("begin transaction");
             session.beginTransaction();
-            log.info("try find all user");
             List<User> users = session.createQuery("select u from User u", User.class).list();
             session.getTransaction().commit();
-            log.info("commit transaction");
             return users;
         }
     }

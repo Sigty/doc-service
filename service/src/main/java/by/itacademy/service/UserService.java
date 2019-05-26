@@ -3,7 +3,6 @@ package by.itacademy.service;
 import by.itacademy.database.dao.UserDao;
 import by.itacademy.database.entity.User;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -16,7 +15,7 @@ public class UserService {
 
     public List<User> findAll() {
         log.info("findAllUser service<-dao");
-        return UserDao.getInstance().findAllUser().stream().collect(Collectors.toList());
+        return UserDao.getInstance().findAllUser();
     }
 
     public static UserService getInstance() {

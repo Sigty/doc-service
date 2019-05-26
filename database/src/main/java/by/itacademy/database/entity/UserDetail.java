@@ -44,9 +44,9 @@ public class UserDetail implements BaseEntity<Integer> {
     @JoinColumn(name = "department_id", nullable = false)
     private Department departments;
 
-    public UserDetail(String firstname, String lastname, String email, Department departments) {
-        this.firstName = firstname;
-        this.lastName = lastname;
+    public UserDetail(String firstName, String lastName, String email, Department departments) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.departments = departments;
     }

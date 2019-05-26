@@ -1,6 +1,6 @@
 package by.itacademy.database.entity;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ public class Document implements BaseEntity<Integer> {
     private String number;
 
     @Column(name = "create_doc_date", nullable = false)
-    private ZonedDateTime createDocDate;
+    private OffsetDateTime createDocDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

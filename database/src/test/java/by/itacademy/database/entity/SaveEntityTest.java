@@ -1,13 +1,10 @@
 package by.itacademy.database.entity;
 
+import by.itacademy.database.util.SaveHelperTest;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,8 +13,9 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-@Log4j
 public class SaveEntityTest {
+
+    SaveHelperTest saveHelp = SaveHelperTest.getInstance();
 
     private SessionFactory sessionFactory;
 
@@ -35,7 +33,7 @@ public class SaveEntityTest {
      * Test insert role, department, userDetail, user.
      */
     @Test
-    public void saveUser() {
+    public void saveUser2() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Role admin = new Role("admin");
@@ -47,6 +45,17 @@ public class SaveEntityTest {
             session.save(detailSveta);
             session.save(Sveta);
             Serializable id = session.save(Sveta);
+            assertNotNull(id);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Test
+    public void saveUser() {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User Alex = saveHelp.fullUser(session, "a", "pass", "admin", "email@a", "Alex");
+            Serializable id = session.save(Alex);
             assertNotNull(id);
             session.getTransaction().commit();
         }
@@ -86,6 +95,23 @@ public class SaveEntityTest {
         }
     }
 
+    @Test
+    public void saveProject2() {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User Alex = saveHelp.fullUser(session, "a", "pass", "admin","admin", "Alex");
+            User Ka = saveHelp.fullUser(session, "b", "pass", "user","user", "Ka");
+            Set<User> mercuryUser = new HashSet<>();
+            mercuryUser.add(Alex);
+            mercuryUser.add(Ka);
+            Project project = new Project("mercury", mercuryUser);
+            session.save(project);
+            Serializable id = session.save(project);
+            assertNotNull(id);
+            session.getTransaction().commit();
+        }
+    }
+
     /**
      * Test insert document, doc_type.
      */
@@ -93,25 +119,17 @@ public class SaveEntityTest {
     public void saveDocument() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Role manager = new Role("manager");
-            Department department = new Department("BA");
-            UserDetail detailJo = new UserDetail("Jo", "Hi", "aa@asd", department);
-            User jo = new User("svaa", "avag", manager, detailJo);
-            ZonedDateTime createDocDate = ZonedDateTime.of(LocalDate.parse("2019-02-03"), LocalTime.parse("12:30:30"),
-                    ZoneId.systemDefault());
+            User Ka = saveHelp.fullUser(session, "b", "pass", "user","user", "Ka");
+            OffsetDateTime createDocDate = OffsetDateTime.parse("2019-02-03T01:02:03Z");
             Assembly pe = new Assembly("pe", true);
             Document document = Document.builder()
                     .number("1")
                     .createDocDate(createDocDate)
-                    .docUser(jo)
+                    .docUser(Ka)
                     .docType(pe)
                     .build();
             session.save(document);
             session.save(pe);
-            session.save(manager);
-            session.save(department);
-            session.save(detailJo);
-            session.save(jo);
             Serializable id = session.save(document);
             assertNotNull(id);
             session.getTransaction().commit();
@@ -125,12 +143,8 @@ public class SaveEntityTest {
     public void savePart() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            ZonedDateTime dataFirst = ZonedDateTime.of(LocalDate.parse("2019-05-03"), LocalTime.parse("11:31:30"),
-                    ZoneId.systemDefault());
-            Role manager = new Role("manager");
-            Department department = new Department("BA");
-            UserDetail detailJo = new UserDetail("Jo", "Hi", "aa@asd", department);
-            User jo = new User("svaa", "avag", manager, detailJo);
+            OffsetDateTime dataFirst = OffsetDateTime.parse("2019-03-03T01:02:03Z");
+            User ka = saveHelp.fullUser(session, "b", "pass", "user","user", "Ka");
             Manufacturer manufacturer = new Manufacturer("vishay");
             Part part = Part.builder()
                     .partNumber("dt-7777777")
@@ -138,13 +152,9 @@ public class SaveEntityTest {
                     .type("res")
                     .sort("r")
                     .createPartDate(dataFirst)
-                    .partUser(jo)
+                    .partUser(ka)
                     .manufacturer(manufacturer)
                     .build();
-            session.save(manager);
-            session.save(department);
-            session.save(detailJo);
-            session.save(jo);
             session.save(manufacturer);
             session.save(part);
             Serializable id = session.save(part);
@@ -160,8 +170,7 @@ public class SaveEntityTest {
     public void saveDocPart() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            ZonedDateTime dataFirst = ZonedDateTime.of(LocalDate.parse("2019-05-03"), LocalTime.parse("11:31:30"),
-                    ZoneId.systemDefault());
+            OffsetDateTime dataFirst = OffsetDateTime.parse("2019-03-03T01:02:03Z");
             Role manager = new Role("manager");
             Department department = new Department("BA");
             UserDetail detailJo = new UserDetail("Jo", "Hi", "aa@asd", department);
@@ -176,8 +185,7 @@ public class SaveEntityTest {
                     .partUser(jo)
                     .manufacturer(manufacturer)
                     .build();
-            ZonedDateTime createDocDate = ZonedDateTime.of(LocalDate.parse("2019-02-03"), LocalTime.parse("12:30:30"),
-                    ZoneId.systemDefault());
+            OffsetDateTime createDocDate = OffsetDateTime.parse("2019-05-03T01:02:03Z");
             Assembly pe = new Assembly("pe", true);
             Document document = Document.builder()
                     .number("1")

@@ -31,7 +31,7 @@ public class Role implements BaseEntity<Integer> {
     @Column(name = "role", unique = true, nullable = false)
     private String role;
 
-    @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<User> user = new HashSet<>();
 
     public Role(String role) {

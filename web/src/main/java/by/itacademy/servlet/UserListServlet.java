@@ -4,7 +4,6 @@ import by.itacademy.database.entity.User;
 import by.itacademy.service.UserService;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +18,9 @@ public class UserListServlet extends HttpServlet {
     private UserService userService = UserService.getInstance();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         log.info("findAllUser servlet-service<-dao");
-        List<User> userList = userService.findAll().stream().collect(Collectors.toList());
+        List<User> userList = userService.findAll();
         req.setAttribute("userList", userList);
-
         getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/user-list.jsp")
                 .forward(req, resp);

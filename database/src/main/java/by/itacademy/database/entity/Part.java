@@ -1,6 +1,6 @@
 package by.itacademy.database.entity;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -47,7 +47,7 @@ public class Part implements BaseEntity<Integer> {
     private String sort;
 
     @Column(name = "create_part_date", nullable = false)
-    private ZonedDateTime createPartDate;
+    private OffsetDateTime createPartDate;
 
     @ManyToOne
     @JoinColumn(name = "create_user_id", nullable = false)
