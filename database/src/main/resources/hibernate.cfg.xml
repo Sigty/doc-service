@@ -22,7 +22,8 @@
         <mapping class="by.itacademy.database.entity.Project"/>
         <mapping class="by.itacademy.database.entity.DocType"/>
         <mapping class="by.itacademy.database.entity.DocPart"/>
-        <mapping class="by.itacademy.database.entity.DocPart$DocPartId"/>
+        <mapping class="by.itacademy.database.entity.Detail"/>
+        <mapping class="by.itacademy.database.entity.Assembly"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

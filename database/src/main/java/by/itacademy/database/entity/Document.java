@@ -11,14 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString(exclude = "docParts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,20 +31,21 @@ public class Document implements BaseEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "number", unique = true, nullable = false)
     private String number;
 
     @Column(name = "create_doc_date", nullable = false)
     private ZonedDateTime createDocDate;
 
-    @OneToOne(mappedBy = "document")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User docUser;
 
     @ManyToOne
     @JoinColumn(name = "type_doc_id")
-    private DocType docTypes;
+    private DocType docType;
 
     @OneToMany(mappedBy = "document")
-    private Set<DocPart> DocParts = new HashSet<>();
+    private Set<DocPart> docParts = new HashSet<>();
 
 }

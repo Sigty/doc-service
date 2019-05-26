@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +24,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "docParts")
 @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "part", schema = "doc_service")
@@ -35,7 +34,7 @@ public class Part implements BaseEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "part_number", nullable = false)
+    @Column(name = "part_number", unique = true, nullable = false)
     private String partNumber;
 
     @Column(name = "description", nullable = false)
@@ -50,7 +49,7 @@ public class Part implements BaseEntity<Integer> {
     @Column(name = "create_part_date", nullable = false)
     private ZonedDateTime createPartDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "create_user_id", nullable = false)
     private User partUser;
 

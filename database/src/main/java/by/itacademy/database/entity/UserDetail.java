@@ -13,9 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString(of = {"firstName", "lastName", "email"})
 @AllArgsConstructor
 @Builder
 @Entity
@@ -26,11 +28,11 @@ public class UserDetail implements BaseEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "firstname", nullable = false)
-    private String firsname;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
 
-    @Column(name = "lastname", nullable = false)
-    private String lastname;
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -41,4 +43,11 @@ public class UserDetail implements BaseEntity<Integer> {
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department departments;
+
+    public UserDetail(String firstname, String lastname, String email, Department departments) {
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.departments = departments;
+    }
 }

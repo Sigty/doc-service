@@ -8,19 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString(exclude = "userProject")
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "project", schema = "doc_service")
 public class Project implements BaseEntity<Integer> {
@@ -33,8 +31,14 @@ public class Project implements BaseEntity<Integer> {
     private String name;
 
     @ManyToMany(mappedBy = "projects", cascade = {CascadeType.PERSIST})
-    @JoinTable(name = "user_project", schema = "doc_service",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> userProject = new HashSet<>();
+
+    public Project(String name) {
+        this.name = name;
+    }
+
+    public Project(String name, Set<User> userProject) {
+        this.name = name;
+        this.userProject = userProject;
+    }
 }

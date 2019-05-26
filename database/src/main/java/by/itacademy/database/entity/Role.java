@@ -17,7 +17,7 @@ import lombok.ToString;
 
 
 @Data
-@ToString(exclude = "user")
+@ToString(exclude = {"id", "user"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -33,4 +33,8 @@ public class Role implements BaseEntity<Integer> {
 
     @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<User> user = new HashSet<>();
+
+    public Role(String role) {
+        this.role = role;
+    }
 }

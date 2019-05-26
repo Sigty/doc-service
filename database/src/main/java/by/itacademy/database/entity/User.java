@@ -12,19 +12,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = {"roles", "userDetail", "projects"})
+@ToString(of = {"id", "login", "password", "roles", "userDetail"})
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "user", schema = "doc_service")
 public class User implements BaseEntity<Integer> {
@@ -47,15 +50,30 @@ public class User implements BaseEntity<Integer> {
     @JoinColumn(name = "detail_user_id")
     private UserDetail userDetail;
 
-    @OneToOne(mappedBy = "partUser")
-    private Part part;
+    @OneToMany(mappedBy = "partUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Part> parts = new HashSet<>();
 
-    @OneToOne(mappedBy = "docUser")
-    private Document document;
+    @OneToMany(mappedBy = "docUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Document> documents = new HashSet<>();
 
-    @ManyToMany(mappedBy = "userProject", cascade = {CascadeType.PERSIST})
+    @ManyToMany
     @JoinTable(name = "user_project", schema = "doc_service",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Project> projects = new HashSet<>();
+
+    public User(String login, String password, Role roles, UserDetail userDetail) {
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
+        this.userDetail = userDetail;
+    }
+
+    public User(String login, String password, Role roles, UserDetail userDetail, Set<Project> projects) {
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
+        this.userDetail = userDetail;
+        this.projects = projects;
+    }
 }

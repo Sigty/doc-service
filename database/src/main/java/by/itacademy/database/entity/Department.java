@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = "userDep")
+@ToString(of = "name")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -33,4 +33,7 @@ public class Department implements BaseEntity<Integer> {
     @OneToMany(mappedBy = "departments", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserDetail> userDet = new HashSet<>();
 
+    public Department(String name) {
+        this.name = name;
+    }
 }
