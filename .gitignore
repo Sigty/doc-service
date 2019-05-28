@@ -1,5 +1,4 @@
 .idea
 *.iml
 *.log
-log4j.log
 target
