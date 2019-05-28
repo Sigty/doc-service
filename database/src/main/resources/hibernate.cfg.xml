@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/doc_service</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">pass</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <mapping class="by.itacademy.database.entity.User"/>
+        <mapping class="by.itacademy.database.entity.UserDetail"/>
+        <mapping class="by.itacademy.database.entity.Role"/>
+        <mapping class="by.itacademy.database.entity.Department"/>
+        <mapping class="by.itacademy.database.entity.Part"/>
+        <mapping class="by.itacademy.database.entity.Manufacturer"/>
+        <mapping class="by.itacademy.database.entity.Document"/>
+        <mapping class="by.itacademy.database.entity.Project"/>
+        <mapping class="by.itacademy.database.entity.DocType"/>
+        <mapping class="by.itacademy.database.entity.DocPart"/>
+        <mapping class="by.itacademy.database.entity.Detail"/>
+        <mapping class="by.itacademy.database.entity.Assembly"/>
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
+

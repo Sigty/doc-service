@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:h2:mem:doc_service;INIT=CREATE SCHEMA IF NOT EXISTS
+            doc_service;
+        </property>
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"/>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+
+        <mapping class="by.itacademy.database.entity.User"/>
+        <mapping class="by.itacademy.database.entity.UserDetail"/>
+        <mapping class="by.itacademy.database.entity.Role"/>
+        <mapping class="by.itacademy.database.entity.Department"/>
+        <mapping class="by.itacademy.database.entity.Part"/>
+        <mapping class="by.itacademy.database.entity.Manufacturer"/>
+        <mapping class="by.itacademy.database.entity.Document"/>
+        <mapping class="by.itacademy.database.entity.Project"/>
+        <mapping class="by.itacademy.database.entity.DocType"/>
+        <mapping class="by.itacademy.database.entity.DocPart"/>
+        <mapping class="by.itacademy.database.entity.Detail"/>
+        <mapping class="by.itacademy.database.entity.Assembly"/>
+
+    </session-factory>
+</hibernate-configuration>
