@@ -1,30 +1,29 @@
 package by.itacademy.database.entity;
 
 import by.itacademy.database.dao.UserDao;
+import by.itacademy.database.util.SessionManager;
 import by.itacademy.database.util.UserTestDataImport;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SelectEntityTest {
 
-    private UserDao userDao = UserDao.getInstance();
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory = SessionManager.getFactory();
+    private final UserDao userDao = UserDao.getInstance();
 
-    @Before
-    public void initDb() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+    @BeforeClass
+    public static void prepare() {
         UserTestDataImport.getInstance().importUserData(sessionFactory);
     }
 
-    @After
-    public void finish() {
+    @AfterClass
+    public static void clear() {
         sessionFactory.close();
     }
 
