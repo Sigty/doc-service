@@ -23,7 +23,6 @@ public class SaveHelperTest {
         return INSTANCE;
     }
 
-
     private Role saveRole(Session session, String role) {
         Role roleUser = new Role(role);
         session.save(roleUser);
