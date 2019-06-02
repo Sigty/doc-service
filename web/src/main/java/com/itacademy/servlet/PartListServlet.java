@@ -21,9 +21,10 @@ public class PartListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("findAllUser servlet-service<-dao");
         int page = 1;
-        int recordsPerPage = 5;
-        if (req.getParameter("page") != null)
+        int recordsPerPage = 10;
+        if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
+        }
         List<Part> allPartList = partService.getAll();
         String partNumber = req.getParameter("partNumber");
         String sort = req.getParameter("sort");

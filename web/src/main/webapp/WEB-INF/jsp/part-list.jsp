@@ -60,8 +60,8 @@
 </table>
 <%--Next page --%>
 <c:if test="${currentPage lt noOfPages}">
-    <td><a href="part-list?page=${currentPage + 1}&partNumber=${partNumber}&sort=${sort}
-    &manufacturer=${manufacturer}">Next</a></td>
+    <td><a href="part-list?page=${currentPage + 1}&partNumber=${partNumber}$sort=${sort}&manufacturer=${manufacturer}">Next</a>
+    </td>
 </c:if>
 
 <table border="1">
@@ -82,8 +82,7 @@
 
 <%--Previous page --%>
 <c:if test="${currentPage != 1}">
-    <td><a href="part-list?page=${currentPage - 1}&partNumber=${partNumber}&sort=${sort}
-    &manufacturer=${manufacturer}">Previous</a>
+    <td><a href="part-list?page=${currentPage - 1}&partNumber=${partNumber}&sort=${sort}&manufacturer=${manufacturer}">Previous</a>
     </td>
 </c:if>
 
