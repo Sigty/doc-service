@@ -15,18 +15,18 @@
         <property name="format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
-        <mapping class="by.itacademy.database.entity.User"/>
-        <mapping class="by.itacademy.database.entity.UserDetail"/>
-        <mapping class="by.itacademy.database.entity.Role"/>
-        <mapping class="by.itacademy.database.entity.Department"/>
-        <mapping class="by.itacademy.database.entity.Part"/>
-        <mapping class="by.itacademy.database.entity.Manufacturer"/>
-        <mapping class="by.itacademy.database.entity.Document"/>
-        <mapping class="by.itacademy.database.entity.Project"/>
-        <mapping class="by.itacademy.database.entity.DocType"/>
-        <mapping class="by.itacademy.database.entity.DocPart"/>
-        <mapping class="by.itacademy.database.entity.Detail"/>
-        <mapping class="by.itacademy.database.entity.Assembly"/>
+        <mapping class="com.itacademy.database.entity.User"/>
+        <mapping class="com.itacademy.database.entity.UserDetail"/>
+        <mapping class="com.itacademy.database.entity.Role"/>
+        <mapping class="com.itacademy.database.entity.Department"/>
+        <mapping class="com.itacademy.database.entity.Part"/>
+        <mapping class="com.itacademy.database.entity.Manufacturer"/>
+        <mapping class="com.itacademy.database.entity.Document"/>
+        <mapping class="com.itacademy.database.entity.Project"/>
+        <mapping class="com.itacademy.database.entity.DocType"/>
+        <mapping class="com.itacademy.database.entity.DocPart"/>
+        <mapping class="com.itacademy.database.entity.Detail"/>
+        <mapping class="com.itacademy.database.entity.Assembly"/>
 
     </session-factory>
 </hibernate-configuration>
