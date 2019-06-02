@@ -1,0 +1,15 @@
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+    <suppress files="Assembly_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Department_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Detail_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="DocPart_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="DocType_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Document_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Manufacturer_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Part_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Project_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="Role_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="User_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="UserDetail_.java" checks="[a-zA-Z0-9]*" />
+</suppressions>
