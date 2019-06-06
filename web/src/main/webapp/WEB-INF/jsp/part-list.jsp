@@ -15,29 +15,45 @@
     <title>List parts</title>
 </head>
 <body>
-<%@ page import="com.itacademy.database.dto.ViewPartBasicDto,com.itacademy.database.entity.Part" %>
-<%@ page import="java.util.List" %>
 <h3> Part List </h3>
-<%
-    List<Part> allParts = (List<Part>) request.getAttribute("allPartList");
-    List<ViewPartBasicDto> parts = (List<ViewPartBasicDto>) request.getAttribute("partList");
-
-%>
-<h4> Total number of parts are <%= allParts.size() %>
-</h4>
-<h4> Current number of parts are <%= parts.size() %>
+<h4> Find parts : ${requestScope.noOfRecords}
 </h4>
 <table border="1">
     <tr>
         <form action="${pageContext.request.contextPath}/part-list">
-            <td><input type="text" name="partNumber" value=""></td>
-            <td></td>
-            <td></td>
-            <td><input type="text" name="sort" value=""></td>
-            <td></td>
-            <td><input type="text" name="manufacturer" value=""></td>
-            <input type="submit" value="Find"/>
-        </form>
+            <label>Parts<input type="text" name="recordsPerPage" value="${requestScope.recordsPerPage}" size="2"/>
+            </label>
+            <input type="submit" value="Find" align="right"/>
+
+    <tr></tr>
+    <td><input type="text" name="partNumber" value=""></td>
+    <td></td>
+    <td>
+        <select value="type" name="type">
+            <option></option>
+            <c:forEach var="type" items="${requestScope.typeList}">
+                <option>${type}</option>
+            </c:forEach>
+        </select>
+    </td>
+    <td>
+        <select value="sort" name="sort">
+            <option></option>
+            <c:forEach var="sort" items="${requestScope.sortList}">
+                <option>${sort}</option>
+            </c:forEach>
+        </select>
+    </td>
+    <td></td>
+    <td>
+        <select value="manufacturer" name="manufacturer">
+            <option></option>
+            <c:forEach var="manufacturer" items="${requestScope.manufacturerList}">
+                <option>${manufacturer}</option>
+            </c:forEach>
+        </select>
+    </td>
+    </form>
     </tr>
     <tr>
         <td>Number</td>
@@ -60,30 +76,32 @@
 </table>
 <%--Next page --%>
 <c:if test="${currentPage lt noOfPages}">
-    <td><a href="part-list?page=${currentPage + 1}&partNumber=${partNumber}$sort=${sort}&manufacturer=${manufacturer}">Next</a>
-    </td>
-</c:if>
+<td>
+    <a href="part-list?page=${currentPage+1}&recordsPerPage=${recordsPerPage}&partNumber=${partNumber}&type=${type}&sort=${sort}&manufacturer=${manufacturer}">Next</a>
+    </c:if>
 
-<table border="1">
-    <tr>
-        <c:forEach begin="1" end="${noOfPages}" var="i">
-            <c:choose>
-                <c:when test="${currentPage eq i}">
-                    <td>${i}</td>
-                </c:when>
-                <c:otherwise>
-                    <td><a href="part-list?page=${i}&partNumber=${partNumber}&sort=${sort}
-                    &manufacturer=${manufacturer}">${i}</a></td>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </tr>
-</table>
+    <table border="1">
+        <tr>
+            <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <td>${i}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>
+                            <a href="part-list?page=${i}&recordsPerPage=${recordsPerPage}&partNumber=${partNumber}&type=${type}&sort=${sort}&manufacturer=${manufacturer}">${i}</a>
+                        </td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+    </table>
 
-<%--Previous page --%>
-<c:if test="${currentPage != 1}">
-    <td><a href="part-list?page=${currentPage - 1}&partNumber=${partNumber}&sort=${sort}&manufacturer=${manufacturer}">Previous</a>
-    </td>
+    <%--Previous page --%>
+    <c:if test="${currentPage != 1}">
+<td>
+    <a href="part-list?page=${currentPage-1}&recordsPerPage=${recordsPerPage}&partNumber=${partNumber}&type=${type}&sort=${sort}&manufacturer=${manufacturer}">Previous</a>
+</td>
 </c:if>
 
 </body>

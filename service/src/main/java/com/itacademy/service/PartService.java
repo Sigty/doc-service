@@ -1,6 +1,7 @@
 package com.itacademy.service;
 
 import com.itacademy.database.dao.PartDao;
+import com.itacademy.database.dto.FilterPartBasicDto;
 import com.itacademy.database.dto.ViewPartBasicDto;
 import com.itacademy.database.entity.Part;
 import java.util.List;
@@ -23,9 +24,12 @@ public class PartService {
         return PartDao.getInstance().getAll();
     }
 
-    public List<ViewPartBasicDto> findListPart(int page, int recordsPerPage, String partNumber,
-                                               String sort, String manufacturer) {
+    public List<ViewPartBasicDto> findListPart(FilterPartBasicDto filter) {
         log.info("findAllPart service<-dao");
-        return PartDao.getInstance().findListPart(page, recordsPerPage, partNumber, sort, manufacturer);
+        return PartDao.getInstance().findListPart(filter);
+    }
+
+    public List<ViewPartBasicDto> findListAllPart(FilterPartBasicDto filter) {
+        return PartDao.getInstance().findAllListPart(filter);
     }
 }

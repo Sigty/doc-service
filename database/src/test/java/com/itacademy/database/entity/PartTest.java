@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PartTest {
@@ -22,14 +21,13 @@ public class PartTest {
     private static SessionFactory sessionFactory = SessionManager.getFactory();
     private final PartDao partDao = PartDao.getInstance();
 
-    @Before
-    public void prepare() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+    @BeforeClass
+    public static void prepare() {
         UserTestDataImport.getInstance().importUserData(sessionFactory);
     }
 
-    @After
-    public void clear() {
+    @AfterClass
+    public static void clear() {
         sessionFactory.close();
     }
 
@@ -73,8 +71,6 @@ public class PartTest {
                     .build();
             partDao.save(part);
             assertTrue(partDao.get(part.getId()).isPresent());
-            Optional<Part> result = partDao.get(3);
-            assertEquals("partNumber", result.get().getPartNumber());
         }
     }
 
@@ -85,7 +81,7 @@ public class PartTest {
     public void saveAndDelPartTest() {
         try (Session session = getSession()) {
             Part part = Part.builder()
-                    .partNumber("partNumber")
+                    .partNumber("partNumber2")
                     .description("description")
                     .type("type")
                     .sort("sort")
@@ -120,7 +116,7 @@ public class PartTest {
                     .build();
             partDao.update(part);
             List<Part> parts = partDao.getAll();
-            int expectedSize = 2;
+            int expectedSize = 3;
             assertEquals(expectedSize, parts.size());
             Optional<Part> result = partDao.get(1);
             assertEquals("testPartNumber", result.get().getPartNumber());
