@@ -1,149 +1,158 @@
 package com.itacademy.database.entity;
 
-import com.itacademy.database.dao.UserDao;
-import com.itacademy.database.util.SessionManager;
-import com.itacademy.database.util.UserTestDataImport;
+import com.itacademy.database.config.TestConfig;
+import com.itacademy.database.repository.DepartmentRepository;
+import com.itacademy.database.repository.DocPartRepository;
+import com.itacademy.database.repository.DocTypeRepository;
+import com.itacademy.database.repository.DocumentRepository;
+import com.itacademy.database.repository.ManufacturerRepository;
+import com.itacademy.database.repository.PartRepository;
+import com.itacademy.database.repository.ProjectRepository;
+import com.itacademy.database.repository.RoleRepository;
+import com.itacademy.database.repository.UserDetailRepository;
+import com.itacademy.database.repository.UserRepository;
+import com.itacademy.database.util.DatabaseHelper;
+import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.junit.AfterClass;
+import java.util.Optional;
 import static org.junit.Assert.assertEquals;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = TestConfig.class)
+@Transactional
+@Rollback
+@Sql("classpath:doc-service_dml.sql")
 public class SelectEntityTest {
 
-    private static SessionFactory sessionFactory = SessionManager.getFactory();
-    private final UserDao userDao = UserDao.getInstance();
+    @Autowired
+    private RoleRepository roleRepository;
 
-    @BeforeClass
-    public static void prepare() {
-        UserTestDataImport.getInstance().importUserData(sessionFactory);
-    }
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
-    @AfterClass
-    public static void clear() {
-        sessionFactory.close();
+    @Autowired
+    private UserDetailRepository userDetailRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private ManufacturerRepository manufacturerRepository;
+
+    @Autowired
+    private PartRepository partRepository;
+
+    @Autowired
+    private DocTypeRepository docTypeRepository;
+
+    @Autowired
+    private DocumentRepository documentRepository;
+
+    @Autowired
+    private DocPartRepository docPartRepository;
+
+    @Autowired
+    private DatabaseHelper databaseHelper;
+
+    @Before
+    public void init() {
+        databaseHelper.cleanDatabase();
+        //      databaseHelper.prepareData();
     }
 
     @Test
     public void getAllRole() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Role> query = session.createQuery("select e from Role e", Role.class);
-            List<Role> roles = query.list();
-            int expectedSize = 3;
-            assertEquals(expectedSize, roles.size());
-            session.getTransaction().commit();
-        }
+        List<Role> allRoles = new ArrayList<>();
+        roleRepository.findAll().forEach(allRoles::add);
+        int expectedSize = 3;
+        assertEquals(expectedSize, allRoles.size());
     }
 
     @Test
     public void getAllDepartment() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Department> query = session.createQuery("select d from Department d", Department.class);
-            List<Department> departments = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, departments.size());
-            session.getTransaction().commit();
-        }
+        List<Department> allDepartments = new ArrayList<>();
+        departmentRepository.findAll().forEach(allDepartments::add);
+        int expectedSize = 3;
+        assertEquals(expectedSize, allDepartments.size());
     }
 
     @Test
     public void getDetailUser() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<UserDetail> query = session.createQuery("select u from UserDetail u", UserDetail.class);
-            List<UserDetail> userDetails = query.list();
-            int expectedSize = 4;
-            assertEquals(expectedSize, userDetails.size());
-            session.getTransaction().commit();
-        }
+        Optional<UserDetail> userDetailId = userDetailRepository.findById(1);
+        assertNotNull(userDetailId.isPresent());
+        String expectedEmail = "ivanovi@gmail.com";
+        assertEquals(expectedEmail, userDetailId.get().getEmail());
     }
 
     @Test
     public void getAllUser() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            List<User> result = userDao.getAll();
-            int expectedSize = 4;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<User> allUser = new ArrayList<>();
+        userRepository.findAll().forEach(allUser::add);
+        int expectedSize = 7;
+        assertEquals(expectedSize, allUser.size());
     }
 
     @Test
     public void getAllProject() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Project> query = session.createQuery("select e from Project e", Project.class);
-            List<Project> result = query.list();
-            int expectedSize = 3;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<Project> allProject = new ArrayList<>();
+        projectRepository.findAll().forEach(allProject::add);
+        int expectedSize = 3;
+        assertEquals(expectedSize, allProject.size());
     }
 
     @Test
     public void getAllManufacturer() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Manufacturer> query = session.createQuery("select e from Manufacturer e", Manufacturer.class);
-            List<Manufacturer> result = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<Manufacturer> allManufacturer = new ArrayList<>();
+        manufacturerRepository.findAll().forEach(allManufacturer::add);
+        int expectedSize = 6;
+        assertEquals(expectedSize, allManufacturer.size());
+        Optional<Manufacturer> allManufacturerId = manufacturerRepository.findById(1);
+        String expectedEmail = "murata";
+        assertEquals(expectedEmail, allManufacturerId.get().getName());
     }
 
     @Test
     public void getAllPart() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Part> query = session.createQuery("select p from Part p", Part.class);
-            List<Part> result = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<Part> allParts = new ArrayList<>();
+        partRepository.findAll().forEach(allParts::add);
+        int expectedSize = 21;
+        assertEquals(expectedSize, allParts.size());
     }
 
     @Test
     public void getAllDocType() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<DocType> query = session.createQuery("select d from DocType d", DocType.class);
-            List<DocType> result = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<DocType> allDocType = new ArrayList<>();
+        docTypeRepository.findAll().forEach(allDocType::add);
+        int expectedSize = 2;
+        assertEquals(expectedSize, allDocType.size());
     }
 
     @Test
     public void getAllDocument() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<Document> query = session.createQuery("select d from Document d", Document.class);
-            List<Document> result = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<Document> allDocument = new ArrayList<>();
+        documentRepository.findAll().forEach(allDocument::add);
+        int expectedSize = 7;
+        assertEquals(expectedSize, allDocument.size());
     }
 
     @Test
     public void getAllDocPart() {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query<DocPart> query = session.createQuery("select d from DocPart d", DocPart.class);
-            List<DocPart> result = query.list();
-            int expectedSize = 2;
-            assertEquals(expectedSize, result.size());
-            session.getTransaction().commit();
-        }
+        List<DocPart> allDocPart = new ArrayList<>();
+        docPartRepository.findAll().forEach(allDocPart::add);
+        int expectedSize = 35;
+        assertEquals(expectedSize, allDocPart.size());
     }
 }
-

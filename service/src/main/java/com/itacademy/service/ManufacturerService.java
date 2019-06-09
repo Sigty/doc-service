@@ -1,8 +1,6 @@
 package com.itacademy.service;
 
-import com.itacademy.database.entity.User;
-import com.itacademy.database.repository.UserRepository;
-import java.util.ArrayList;
+import com.itacademy.database.repository.ManufacturerRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -14,15 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 @Transactional
-public class UserService {
+public class ManufacturerService {
 
     @Autowired
-    private UserRepository userRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
-    public List<User> findAll() {
-        log.info("findAllUser service<-dao");
-        List<User> allUser = new ArrayList<>();
-        userRepository.findAll().forEach(allUser::add);
-        return allUser;
+    public List<String> manufacturersName() {
+        log.info("findAllManufacturer service<-dao");
+        return manufacturerRepository.findManufacturerName();
     }
 }
