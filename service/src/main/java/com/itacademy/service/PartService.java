@@ -1,35 +1,41 @@
 package com.itacademy.service;
 
-import com.itacademy.database.dao.PartDao;
 import com.itacademy.database.dto.FilterPartBasicDto;
 import com.itacademy.database.dto.ViewPartBasicDto;
-import com.itacademy.database.entity.Part;
+import com.itacademy.database.repository.PartRepository;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Service
+@Transactional
 public class PartService {
 
-    private static final PartService INSTANCE = new PartService();
-
-    public static PartService getInstance() {
-        return INSTANCE;
-    }
-
-    public List<Part> getAll() {
-        log.info("findAllPart service<-dao");
-        return PartDao.getInstance().getAll();
-    }
+    @Autowired
+    private final PartRepository partRepository;
 
     public List<ViewPartBasicDto> findListPart(FilterPartBasicDto filter) {
-        log.info("findAllPart service<-dao");
-        return PartDao.getInstance().findListPart(filter);
+        log.info("findByFilter service<-dao");
+        return partRepository.filterListPart(filter);
     }
 
-    public List<ViewPartBasicDto> findListAllPart(FilterPartBasicDto filter) {
-        return PartDao.getInstance().findAllListPart(filter);
+    public Long findCountPart(FilterPartBasicDto filter) {
+        log.info("findCount service<-dao");
+        return partRepository.findCountPart(filter);
+    }
+
+    public List<String> sortList() {
+        log.info("findAllSort service<-dao");
+        return partRepository.findAllSort();
+    }
+
+    public List<String> typeList() {
+        log.info("findAllType service<-dao");
+        return partRepository.findAllType();
     }
 }

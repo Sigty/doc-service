@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FilterPartBasicDto {
 
-    Integer page;
-    Integer recordsPerPage;
-    String partNumber;
-    String type;
-    String sort;
-    String manufacturer;
+    private Integer page;
+    private Integer recordsPerPage;
+    private String partNumber;
+    private String type;
+    private String sort;
+    private String manufacturer;
 }

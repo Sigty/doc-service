@@ -30,27 +30,30 @@
     <td></td>
     <td>
         <select value="type" name="type">
-            <option></option>
+            <option>${requestScope.type}</option>
             <c:forEach var="type" items="${requestScope.typeList}">
                 <option>${type}</option>
             </c:forEach>
+            <option value="">Reset</option>
         </select>
     </td>
     <td>
         <select value="sort" name="sort">
-            <option></option>
+            <option>${requestScope.sort}</option>
             <c:forEach var="sort" items="${requestScope.sortList}">
                 <option>${sort}</option>
             </c:forEach>
+            <option value="">Reset</option>
         </select>
     </td>
     <td></td>
     <td>
         <select value="manufacturer" name="manufacturer">
-            <option></option>
+            <option>${requestScope.manufacturer}</option>
             <c:forEach var="manufacturer" items="${requestScope.manufacturerList}">
                 <option>${manufacturer}</option>
             </c:forEach>
+            <option value="">Reset</option>
         </select>
     </td>
     </form>
