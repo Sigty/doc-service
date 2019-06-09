@@ -1,5 +1,3 @@
-\c doc_service;
-
 INSERT INTO doc_service.doc_type (id, name, type, assembly, detail)
 VALUES (1, 'AD', 'assembly', true, false),
        (2, 'DT', 'detail', false, true);
@@ -72,7 +70,7 @@ VALUES (1, 'ad-0000001', '2018-12-21 10:23:54', 1, 1),
 INSERT INTO doc_service.part (id, part_number, description, type, sort, create_part_date, create_user_id,
                               manufacturer_id)
 VALUES (1, 'GRM188R71C104KA01D', '0.1 uF_10%_16V_X7R_0603', 'cap', 'c', '2018-12-21 10:23:54', 1, 1),
-       (2, 'T520A106M010ATE080', '10 uF_20%_10V_A', ' cap_el ', 'ce', '2018-12-22 17:35:00', 1, 2),
+       (2, 'T520A106M010ATE080', '10 uF_20%_10V_A', 'cap_el', 'ce', '2018-12-22 17:35:00', 1, 2),
        (3, 'GRM188R61A225KE34D', '2.2 uF_10%_10V_X5R_0603', 'cap', 'c', '2019-01-05 07:35:00', 1, 1),
        (4, 'ECJ-1VB1A474K', '0.47uF_10%_10V_X5R_0603', 'cap', 'c', '2019-01-08 07:35:00', 2, 6),
        (5, 'ECJ-1VB1A224K', '0.22uF_10%_10V_X5R_0603', 'cap', 'c', '2019-01-18 07:35:00', 3, 6),
