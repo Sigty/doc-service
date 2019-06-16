@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User list</title>
+</head>
+<body>
+<table>
+    <div th:each="user: ${userList}">
+        <span th:text="${user.login}">User</span>
+        <span th:text="${user.role.role}"></span>
+        <span th:text="${user.userSpecialty.firstName}">User</span>
+        <span th:text="${user.userSpecialty.lastName}"></span>
+        <span th:text="${user.userSpecialty.email}"></span>
+    </div>
+</table>
+</body>
+</html>
