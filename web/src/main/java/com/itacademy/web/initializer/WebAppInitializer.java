@@ -30,4 +30,3 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }
-
