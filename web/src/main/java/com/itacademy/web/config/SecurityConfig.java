@@ -1,7 +1,10 @@
 package com.itacademy.web.config;
 
-import com.itacademy.web.util.UtilText;
+import com.itacademy.web.util.UtilPath;
+import com.itacademy.web.util.UtilRole;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,26 +15,58 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+
+    private static final String[] ADMIN_PAGES =
+            {"/" + UtilPath.USER_LIST,
+                    "/" + UtilPath.USER_CHANGE_ROLE
+
+            };
+
+    private static final String[] USER_PAGES =
+            {"/" + UtilPath.PART_LIST,
+                    "/" + UtilPath.CABINET,
+                    "/" + UtilPath.PART_CREATE,
+                    "/" + UtilPath.PART_EDIT,
+                    "/" + UtilPath.DOCUM_CREATE,
+                    "/" + UtilPath.DOCUM_EDIT,
+                    "/" + UtilPath.DOCUM_LIST,
+                    "/" + UtilPath.DOCUM_DELETE,
+                    "/" + UtilPath.USER_CHANGE_DETAIL,
+                    "/" + UtilPath.DOCPART_EDIT,
+                    "/" + UtilPath.DOCPART_DETAIL,
+                    "/" + UtilPath.DOCPART_ADD,
+                    "/" + UtilPath.DOCPART_DELETE
+            };
+
+    private static final String[] ANONYMOUS_PAGES = {"/" + UtilPath.HOME, "/" + UtilPath.SINGIN, "/" + UtilPath.LOGIN};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(("/" + UtilText.USER_LIST)).hasAuthority(UtilText.ADMIN)
-                .antMatchers(("/" + UtilText.HOME)).hasAnyAuthority(UtilText.ADMIN, UtilText.ADMIN)
-                .antMatchers(("/" + UtilText.PART_LIST)).hasAnyAuthority(UtilText.ADMIN, UtilText.USER)
+                .antMatchers(ADMIN_PAGES)
+                .hasAuthority(UtilRole.ADMIN)
+                .antMatchers(USER_PAGES)
+                .hasAnyAuthority(UtilRole.USER, UtilRole.ADMIN)
+//                .antMatchers("/" + UtilPath.HOME).hasAnyAuthority(UtilPath.ADMIN, UtilPath.ADMIN)
+                .antMatchers(ANONYMOUS_PAGES)
+                .permitAll()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/" + UtilPath.HOME)
                 .and()
-                .logout();
+                .logout()
+                .logoutSuccessUrl("/" + UtilPath.HOME)
+                .and()
+                .exceptionHandling().accessDeniedPage("/" + UtilPath.HOME);
     }
 
     @Bean
@@ -50,5 +85,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider());
+    }
+
+    @Bean
+    public CharacterEncodingFilter encodingFilter() {
+        return new CharacterEncodingFilter(UTF_8.name());
     }
 }

@@ -1,14 +1,18 @@
 package com.itacademy.database.repository;
 
+import com.itacademy.database.dto.CreateOrEditPartDto;
 import com.itacademy.database.dto.FilterPartBasicDto;
-import com.itacademy.database.dto.ViewPartBasicDto;
+import com.itacademy.database.dto.PartMidDto;
 import com.itacademy.database.entity.Manufacturer;
 import com.itacademy.database.entity.Manufacturer_;
 import com.itacademy.database.entity.Part;
 import com.itacademy.database.entity.Part_;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -22,9 +26,9 @@ public class ExtendedPartRepositoryImpl implements ExtendedPartRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<ViewPartBasicDto> filterListPart(FilterPartBasicDto filter) {
-        CriteriaQuery<ViewPartBasicDto> criteria = getCriteria(filter);
-        List<ViewPartBasicDto> parts = entityManager.createQuery(criteria)
+    public List<PartMidDto> filterListPart(FilterPartBasicDto filter) {
+        CriteriaQuery<PartMidDto> criteria = getCriteria(filter);
+        List<PartMidDto> parts = entityManager.createQuery(criteria)
                 .setFirstResult((filter.getPage() - 1) * filter.getRecordsPerPage())
                 .setMaxResults(filter.getRecordsPerPage())
                 .getResultList();
@@ -57,16 +61,38 @@ public class ExtendedPartRepositoryImpl implements ExtendedPartRepository {
         return countParts;
     }
 
-    private CriteriaQuery<ViewPartBasicDto> getCriteria(FilterPartBasicDto filter) {
+    @Override
+    public Optional<CreateOrEditPartDto> findPartById(Integer id) throws EntityNotFoundException {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ViewPartBasicDto> criteria = cb.createQuery(ViewPartBasicDto.class);
+        CriteriaQuery<CreateOrEditPartDto> criteria = cb.createQuery(CreateOrEditPartDto.class);
+        Root<Part> root = criteria.from(Part.class);
+        Join<Part, Manufacturer> manufacturerJoin = root.join(Part_.manufacturer);
+        Predicate predicate = cb.equal(root.get(Part_.id), id);
+        criteria
+                .select(cb.construct(CreateOrEditPartDto.class,
+                        root.get(Part_.partNumber),
+                        root.get(Part_.description),
+                        root.get(Part_.type),
+                        root.get(Part_.sort),
+                        manufacturerJoin.get(Manufacturer_.name))
+                ).where(predicate);
+        try {
+            return Optional.ofNullable(entityManager.createQuery(criteria).getSingleResult());
+        } catch (PersistenceException ex){
+            return null;
+        }
+    }
+
+    private CriteriaQuery<PartMidDto> getCriteria(FilterPartBasicDto filter) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<PartMidDto> criteria = cb.createQuery(PartMidDto.class);
         Root<Part> root = criteria.from(Part.class);
         Join<Part, Manufacturer> manufacturerJoin = root.join(Part_.manufacturer);
         List<Predicate> predicatePart = getPredicates(filter, cb, root, manufacturerJoin);
         Predicate[] predicatePartArray = new Predicate[predicatePart.size()];
         predicatePart.toArray(predicatePartArray);
         return criteria
-                .select(cb.construct(ViewPartBasicDto.class,
+                .select(cb.construct(PartMidDto.class,
                         root.get(Part_.partNumber),
                         root.get(Part_.description),
                         root.get(Part_.type),

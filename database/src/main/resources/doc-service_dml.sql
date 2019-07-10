@@ -2,24 +2,20 @@ INSERT INTO doc_service.doc_type (id, name, type, assembly, detail)
 VALUES (1, 'AD', 'assembly', true, false),
        (2, 'DT', 'detail', false, true);
 
-INSERT INTO doc_service.department (id, name)
-VALUES (1, 'DEV'),
-       (2, 'QA'),
-       (3, 'DEVOPS');
 
 INSERT INTO doc_service.role (id, role)
 VALUES (1, 'user'),
        (2, 'manager'),
        (3, 'admin');
 
-INSERT INTO doc_service.user_detail (id, firstname, lastname, email, department_id)
-VALUES (1, 'Ivan', 'Ivanov', 'ivanovi@gmail.com', 3),
-       (2, 'Kate', 'Katerinina', 'katkate@gmail.com', 1),
-       (3, 'Sergey', 'Brin', 'thefirstserg@gmail.com', 1),
-       (4, 'Sveta', 'Svetlakova', 'svetik123@tut.by', 3),
-       (5, 'Roman', 'Romanov', 'rom4ik@mail.ru', 2),
-       (6, 'Mikael', 'Grev', 'mikgrev@yahoo.com', 3),
-       (7, 'Semen', 'Semenov', 'semsem@yahoo.com', 2);
+INSERT INTO doc_service.user_specialty (id, firstname, lastname, email)
+VALUES (1, 'Ivan', 'Ivanov', 'ivanovi@gmail.com'),
+       (2, 'Kate', 'Katerinina', 'katkate@gmail.com'),
+       (3, 'Sergey', 'Brin', 'thefirstserg@gmail.com'),
+       (4, 'Sveta', 'Svetlakova', 'svetik123@tut.by'),
+       (5, 'Roman', 'Romanov', 'rom4ik@mail.ru'),
+       (6, 'Mikael', 'Grev', 'mikgrev@yahoo.com'),
+       (7, 'Semen', 'Semenov', 'semsem@yahoo.com');
 
 INSERT INTO doc_service.user (id, login, password, detail_user_id, role_id)
 VALUES (1, 'van', 'simpass', 1, 1),
@@ -30,25 +26,6 @@ VALUES (1, 'van', 'simpass', 1, 1),
        (6, 'grev', 'vfrujm123a', 6, 3),
        (7, 'semsim', 'simsem', 7, 1);
 
-INSERT INTO doc_service.project (id, name)
-VALUES (1, ' mars '),
-       (2, ' saturn '),
-       (3, ' venera ');
-
-INSERT INTO doc_service.user_project (user_id, project_id)
-VALUES (1, 1),
-       (2, 2),
-       (3, 3),
-       (4, 1),
-       (5, 2),
-       (6, 3),
-       (7, 2),
-       (1, 2),
-       (3, 2),
-       (5, 3),
-       (2, 1),
-       (4, 2),
-       (7, 3);
 
 INSERT INTO doc_service.manufacturer (id, name)
 VALUES (1, 'murata'),

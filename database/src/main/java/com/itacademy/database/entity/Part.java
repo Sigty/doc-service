@@ -59,24 +59,4 @@ public class Part implements BaseEntity<Integer> {
 
     @OneToMany(mappedBy = "parts")
     private Set<DocPart> docParts = new HashSet<>();
-
-    public Part(String partNumber, String description, String type, String sort,
-                OffsetDateTime createPartDate, User partUser) {
-        this.partNumber = partNumber;
-        this.description = description;
-        this.type = type;
-        this.sort = sort;
-        this.createPartDate = createPartDate;
-        this.partUser = partUser;
-    }
-
-    public Part(String partNumber, String description, String type, String sort, OffsetDateTime createPartDate, User partUser, Manufacturer manufacturer) {
-        this.partNumber = partNumber;
-        this.description = description;
-        this.type = type;
-        this.sort = sort;
-        this.createPartDate = createPartDate;
-        this.partUser = partUser;
-        this.manufacturer = manufacturer;
-    }
 }

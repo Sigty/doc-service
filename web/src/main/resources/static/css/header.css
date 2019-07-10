@@ -1,0 +1,375 @@
+html {
+    background-color: #eee;
+}
+
+.lang {
+    color: #fff;
+    box-shadow: none;
+    border: none;
+    text-shadow: none;
+}
+
+.find {
+    background: #56c6c6;
+    border-radius: 20px;
+    color: #fff;
+    box-shadow: none;
+    border: none;
+    text-shadow: none;
+    padding: 5px 10px;
+    transition: background-color 0.25s;
+    margin-bottom: 10px;
+}
+
+.navigation-clean-button {
+    background: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #333;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0;
+}
+
+.navbar-lang {
+    /*font-weight:bold;*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block;
+    margin-right: 25px;
+    width: auto;
+    font-weight: bold;
+    color: inherit;
+    color: #222;
+    color: #f0f0f0;
+}
+
+.navigation-clean-button .navbar-brand {
+    /*font-weight:bold;*/
+    color: inherit;
+}
+
+.navigation-clean-button .navbar-brand:hover {
+    color: #222;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-brand:hover {
+    color: #f0f0f0;
+}
+
+.navigation-clean-button .navbar-brand img {
+    height: 100%;
+    display: inline-block;
+    margin-right: 10px;
+    width: auto;
+}
+
+.navigation-clean-button .navbar-toggle {
+    border-color: #ddd;
+}
+
+.navigation-clean-button .navbar-toggle:hover, .navigation-clean-button .navbar-toggle:focus {
+    background: none;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-toggle {
+    border-color: #555;
+}
+
+.navigation-clean-button .navbar-toggle .icon-bar {
+    background-color: #888;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #eee;
+}
+
+.navigation-clean-button .navbar-collapse, .navigation-clean-button .navbar-form {
+    border-top-color: #ddd;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-collapse, .navigation-clean-button.navbar-inverse .navbar-form {
+    border-top-color: #333;
+}
+
+.navigation-clean-button .navbar-nav > .active > a, .navigation-clean-button .navbar-nav > .open > a {
+    background: none;
+    box-shadow: none;
+}
+
+.navigation-clean-button.navbar-default .navbar-nav > .active > a, .navigation-clean-button.navbar-default .navbar-nav > .active > a:focus, .navigation-clean-button.navbar-default .navbar-nav > .active > a:hover {
+    color: #8f8f8f;
+    box-shadow: none;
+    background: none;
+    pointer-events: none;
+}
+
+.navigation-clean-button.navbar .navbar-nav > li > a {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.navigation-clean-button.navbar-default .navbar-nav > li > a {
+    color: #465765;
+}
+
+.navigation-clean-button.navbar-default .navbar-nav > li > a:focus, .navigation-clean-button.navbar-default .navbar-nav > li > a:hover {
+    color: #37434d !important;
+    background-color: transparent;
+}
+
+.navigation-clean-button .navbar-nav > li > .dropdown-menu {
+    margin-top: -5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.navigation-clean-button .dropdown-menu > li > a:focus, .navigation-clean-button .dropdown-menu > li > a {
+    line-height: 2;
+    font-size: 14px;
+    color: #37434d;
+}
+
+.navigation-clean-button .dropdown-menu > li > a:focus, .navigation-clean-button .dropdown-menu > li > a:hover {
+    background: #eee;
+    color: inherit;
+}
+
+.navigation-clean-button.navbar-inverse {
+    background-color: #1f2021;
+    color: #fff;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-nav > .active > a, .navigation-clean-button.navbar-inverse .navbar-nav > .active > a:focus, .navigation-clean-button.navbar-inverse .navbar-nav > .active > a:hover {
+    color: #8f8f8f;
+    box-shadow: none;
+    background: none;
+    pointer-events: none;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-nav > li > a {
+    color: #dfe8ee;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-nav > li > a:focus, .navigation-clean-button.navbar-inverse .navbar-nav > li > a:hover {
+    color: #fff !important;
+    background-color: transparent;
+}
+
+.navigation-clean-button.navbar-inverse .navbar-nav > li > .dropdown-menu {
+    background-color: #1f2021;
+}
+
+.navigation-clean-button.navbar-inverse .dropdown-menu > li > a:focus, .navigation-clean-button.navbar-inverse .dropdown-menu > li > a {
+    color: #f2f5f8;
+}
+
+.navigation-clean-button.navbar-inverse .dropdown-menu > li > a:focus, .navigation-clean-button.navbar-inverse .dropdown-menu > li > a:hover {
+    background: #363739;
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-button.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #fff;
+    }
+}
+
+.navigation-clean-button .actions {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.navigation-clean-button .actions .login {
+    margin-right: 7px;
+    text-decoration: none;
+    color: #465765;
+}
+
+.navigation-clean-button.navbar-inverse .actions .login {
+    color: #dfe8ee;
+}
+
+.navigation-clean-button.navbar-inverse .actions .login:hover {
+    color: #fff;
+}
+
+.navigation-clean-button .action-button, .navigation-clean-button .action-button:active {
+    background: #56c6c6;
+    border-radius: 20px;
+    color: #fff;
+    box-shadow: none;
+    border: none;
+    text-shadow: none;
+    padding: 10px 22px;
+    transition: background-color 0.25s;
+}
+
+.navigation-clean-button .action-button:hover {
+    background: #66d7d7;
+}
+
+.navigation-clean-button.navbar-inverse .action-button, .navigation-clean-button.navbar-inverse .action-button:active {
+    background: #208f8f;
+}
+
+.navigation-clean-button.navbar-inverse .action-button:hover {
+    background: #269d9d;
+}
+
+
+@media (max-width: 767px) {
+    .navigation-clean-button .navbar-nav .open .dropdown-menu {
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-button .navbar-nav .open .dropdown-menu > li > a {
+        color: #37434d;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        line-height: 1;
+    }
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-button {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-button .navbar-header {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-button .navbar-right {
+        margin-bottom: 0px;
+    }
+
+    .navigation-clean-button .navbar-left {
+        margin-bottom: 0px;
+    }
+}
+
+.base {
+    background-color: #fff;
+}
+
+/* CSS Document */
+ul#cssmenu {
+    max-width: 150px;
+    width: auto;
+    margin-top: 15px;
+    border: 0 none;
+    padding: 0;
+    list-style: none;
+    height: 30px;
+}
+
+ul#cssmenu li {
+    margin: 0;
+    border: 0 none;
+    padding: 0;
+    float: left;
+    display: inline;
+    list-style: none;
+    position: relative;
+    height: 30px;
+}
+
+ul#cssmenu ul {
+    margin: 0;
+    border: 0 none;
+    padding: 0;
+    width: 160px;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+}
+
+ul#cssmenu ul:after {
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+    visibility: hidden;
+}
+
+ul#cssmenu ul li {
+    width: 150px;
+    float: left;
+    display: block !important;
+    display: inline;
+}
+
+/* Main Menu */
+ul#cssmenu a {
+    border: 0px;
+    padding: 0 10px;
+    float: none !important;
+    float: left;
+    display: block;
+    color: #465765;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    height: auto !important;
+    height: 1%;
+}
+
+/* Main Menu Hover */
+ul#cssmenu a:hover,
+ul#cssmenu li:hover a,
+ul#cssmenu li.iehover a {
+    color: #333;
+
+}
+
+/* Second Menu */
+ul#cssmenu li:hover li a,
+ul#cssmenu li.iehover li a {
+    color: #333;
+    float: none;
+}
+
+/* Second Menu Hover */
+ul#cssmenu li:hover li a:hover,
+ul#cssmenu li:hover li:hover a,
+ul#cssmenu li.iehover li a:hover,
+ul#cssmenu li.iehover li.iehover a {
+    color: #333;
+}
+
+ul#cssmenu ul ul {
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
+ul#cssmenu li:hover ul ul,
+ul#cssmenu li.iehover ul ul {
+    display: none;
+}
+
+ul#cssmenu li:hover ul,
+ul#cssmenu ul li:hover ul,
+ul#cssmenu li.iehover ul,
+ul#cssmenu ul li.iehover ul {
+    display: block;
+}
+
+.icons-table {
+    width: 22px;
+    height: auto;
+    vertical-align: middle;
+}

@@ -18,6 +18,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 @Data
 @ToString(exclude = "documents")
@@ -26,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "doc_type", schema = "doc_service")
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 public abstract class DocType implements BaseEntity<Integer> {

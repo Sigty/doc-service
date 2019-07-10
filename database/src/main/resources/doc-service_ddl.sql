@@ -13,12 +13,6 @@ CREATE TABLE doc_service.doc_type
     detail   BOOLEAN
 );
 
-CREATE TABLE doc_service.department
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(64) UNIQUE NOT NULL
-);
-
 CREATE TABLE doc_service.role
 (
     id   SERIAL PRIMARY KEY,
@@ -30,8 +24,7 @@ CREATE TABLE doc_service.user_detail
     id            SERIAL PRIMARY KEY,
     firstname     VARCHAR(64)        NOT NULL,
     lastname      VARCHAR(64)        NOT NULL,
-    email         VARCHAR(64) UNIQUE NOT NULL,
-    department_id INTEGER REFERENCES doc_service.department (id)
+    email         VARCHAR(64) UNIQUE NOT NULL
 );
 
 CREATE TABLE doc_service.user
@@ -39,21 +32,8 @@ CREATE TABLE doc_service.user
     id             SERIAL PRIMARY KEY,
     login          VARCHAR(32) UNIQUE                              NOT NULL,
     password       VARCHAR(32)                                     NOT NULL,
-    detail_user_id INTEGER REFERENCES doc_service.user_detail (id) NOT NULL,
+    detail_user_id INTEGER REFERENCES doc_service.user_specialty (id) NOT NULL,
     role_id        INTEGER REFERENCES doc_service.role (id)        NOT NULL DEFAULT 1
-);
-
-CREATE TABLE doc_service.project
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(32) NOT NULL
-);
-
-CREATE TABLE doc_service.user_project
-(
-    user_id    INTEGER REFERENCES doc_service.user (id),
-    project_id INTEGER REFERENCES doc_service.project (id),
-    PRIMARY KEY (user_id, project_id)
 );
 
 CREATE TABLE doc_service.manufacturer

@@ -1,12 +1,12 @@
 package com.itacademy.web.config;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Configuration
 public class ThymeleafConfig {
@@ -34,6 +34,9 @@ public class ThymeleafConfig {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding(UTF_8.name());
+        resolver.setContentType("text/html;charset=UTF-8");
         return resolver;
     }
+
+
 }

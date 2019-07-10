@@ -1,9 +1,9 @@
 package com.itacademy.database.repository;
 
-import com.itacademy.database.dto.LoginDTO;
+import com.itacademy.database.dto.LoginDto;
 import com.itacademy.database.entity.Role;
-import com.itacademy.database.entity.Role_;
 import com.itacademy.database.entity.User;
+import com.itacademy.database.entity.Role_;
 import com.itacademy.database.entity.User_;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,13 +18,13 @@ public class ExtendedUserRepositoryImpl implements ExtendedUserRepository {
     private EntityManager entityManager;
 
     @Override
-    public LoginDTO findByLogin(String login) {
+    public LoginDto findByLogin(String login) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<LoginDTO> criteria = cb.createQuery(LoginDTO.class);
+        CriteriaQuery<LoginDto> criteria = cb.createQuery(LoginDto.class);
         Root<User> root = criteria.from(User.class);
         Join<User, Role> roleJoin = root.join(User_.role);
         criteria
-                .select(cb.construct(LoginDTO.class,
+                .select(cb.construct(LoginDto.class,
                         root.get(User_.login),
                         root.get(User_.password), roleJoin.get(Role_.role)))
                 .where(cb.equal(root.get(User_.login), login));

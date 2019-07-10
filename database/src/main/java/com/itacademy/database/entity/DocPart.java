@@ -8,17 +8,23 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "doc_part", schema = "doc_service")
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class DocPart implements BaseEntity<DocPart.Id> {
 
     @EmbeddedId
@@ -34,6 +40,10 @@ public class DocPart implements BaseEntity<DocPart.Id> {
     @ManyToOne
     @JoinColumn(name = "part_id", insertable = false, updatable = false)
     private Part parts;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     @Data
     @NoArgsConstructor

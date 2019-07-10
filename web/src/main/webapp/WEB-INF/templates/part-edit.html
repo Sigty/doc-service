@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part create</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/cabinet.css}">
+</head>
+<body>
+<!--Header-->
+<div th:insert="~{header}"></div>
+<!--Header-->
+<div class="container">
+
+    <div class="create-form">
+        <form class="form-signin" th:action="@{/part-edit/{id}(id=${id})}" th:method="post" th:object="${createOrEditPartDto}">
+            <h2 class="form-create-heading" th:text="#{part.editTitle}">Create part</h2>
+            <p>
+                <label for="partNumber" class="sr-only" th:text="#{part.number}">partNumber</label>
+                <input type="text" id="partNumber" th:field="*{partNumber}" name="partNumber"
+                       pattern="^[A-Za-zА-Яа-я0-9]*[A-Za-zА-Яа-яЁё0-9._%+-\s]+$"
+                       class="form-control" th:placeholder="#{part.number}" required
+                       autofocus>
+            </p>
+            <p>
+                <label for="type" class="sr-only" th:text="#{part.type}">type</label>
+                <input type="text" id="type" th:field="*{type}" name="type"
+                       pattern="(^[A-Za-z0-9]*[A-Za-z0-9._]+$)"
+                       class="form-control" th:placeholder="#{part.type}" required>
+            </p>
+            <p>
+                <label for="sort" class="sr-only" th:text="#{part.sort}">sort</label>
+                <input type="text" id="sort" th:field="*{sort}"  name="sort"
+                       pattern="(^[A-Za-z0-9]*[A-Za-z0-9._]+$)"
+                       th:placeholder="#{part.sort}"
+                       class="form-control" required>
+            </p>
+            <p>
+                <label for="manufacturer" class="sr-only" th:text="#{part.manufacturer}">manufacturer</label>
+                <input type="text" id="manufacturer" th:field="*{manufacturer}" name="manufacturer"
+                       pattern="(^[A-Za-zА-Яа-яЁё0-9]?[A-Za-zА-Яа-яЁё0-9._+-\s]+$)"
+                       th:placeholder="#{part.manufacturer}"
+                       class="form-control" required>
+            </p>
+            <p>
+                <label for="description" class="sr-only" th:text="#{part.description}">description</label>
+                <input type="text" id="description" th:field="*{description}" name="email"
+                       pattern="(^[A-Za-zА-Яа-яЁё0-9]?[A-Za-zА-Яа-яЁё0-9._%+-\s]+$)"
+                       th:placeholder="#{part.description}"
+                       class="form-control" required>
+            </p>
+            <input name="_csrf" type="hidden" value="337369bb-460d-4071-aee0-dd53ffb09376"/>
+            <button class="btnCE btnC-lg btn-primaryCE" type="submit" th:text="#{part.edit}">Sign in</button>
+            <a class="btnB btnC-lg btn-primaryCE" th:href="@{/home}" th:text="#{singin.back}">Back</a>
+        </form>
+    </div>
+
+    <div class="container-error">
+        <div class="errorSing">
+            <div th:if="${error != null}">
+                <div th:value="${error}"
+                     th:text="#{part.number}+' '+${error}+' '+#{singin.error}"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--Footer-->
+<div th:insert="~{footer}"></div>
+<!--Footer-->
+</body>
+</html>

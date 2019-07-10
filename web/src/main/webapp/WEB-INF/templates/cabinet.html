@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabinet</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/cabinet.css}">
+    <script type="text/javascript" th:src="@{/js/changeRole.js}"></script>
+    <!--    <script th:src="@{/js/jquery.query-object.js}"></script>-->
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div class="container">
+
+    <div>
+        <div class="user-name">
+            <div class="block-name">
+                <div id="form" style="display: inline-block;">
+                    <div class="text-name" th:value="${userCurrent.firstName}"
+                         th:text="${#strings.capitalize(#strings.toLowerCase(userCurrent.firstName))}"></div>
+                    <div class="text-name" th:value="${userCurrent.lastName}"
+                         th:text="${#strings.capitalize(#strings.toLowerCase(userCurrent.lastName))}"></div>
+                </div>
+                <div class="change-block">
+                    <form th:action="@{/user-detail/}" th:method="post" id="name" style="display: none;"
+                          th:object="${userCurrent}">
+                      <span>
+                        <label for="f_name" class="base sr-only"
+                               th:text="#{user.firstName}">First Name</label>
+                        <input type="text" id="f_name" th:field="*{firstName}" name="f_name"
+                               pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                               th:placeholder="#{user.firstName}"
+                               class="base form-cabinet" required>
+                        <label for="n_name" class="base sr-only" th:text="#{user.lastName}">Last Name</label>
+                        <input type="text" id="n_name" th:field="*{lastName}" name="f_name"
+                               pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                               th:placeholder="#{user.lastName}"
+                               class="base form-cabinet" required>
+                    </span>
+                        <button type="submit" class="button-submit" th:text="#{user.save}">Отправить</button>
+                    </form>
+                </div>
+
+                <div class="text-name" th:href="@{/cabinet}">
+                    <input type="image" class="med-icons-table" th:src="@{/images/edit.png}"
+                           onclick="dispF(document.getElementById('name'), document.getElementById('form'))">
+                </div>
+            </div>
+
+            <div class="change-block">
+                <!--                <input class="button-change" type="button" onclick="dispF(document.getElementById('1'))" th:value="1"/>-->
+                <form th:action="@{/user-changeRole/}" th:method="post" id="1" style="display: none;"
+                      th:object="${userCurrent}">
+                      <span>
+                        <label for="f_name" class="sr-only"
+                               th:text="#{user.firstName}">First Name</label>
+                        <input type="text" id="f_name" th:field="*{firstName}" name="f_name"
+                               pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                               th:placeholder="#{user.firstName}"
+                               class="form-cabinet" required>
+                        <label for="n_name" class="sr-only" th:text="#{user.lastName}">Last Name</label>
+                        <input type="text" id="n_name" th:field="*{lastName}" name="f_name"
+                               pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                               th:placeholder="#{user.lastName}"
+                               class="form-cabinet" required>
+                    </span>
+                    <button type="submit" class="button-submit" th:text="#{user.change}">Отправить</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="errorSingTable">
+        <div>
+            <div th:if="${errorDoc != null}">
+                <div th:value="${errorDoc}"
+                     th:text="#{document.errorDocA} +${#strings.capitalize(#strings.toLowerCase(errorDoc))} + ' ' + #{document.errorDocB}"></div>
+            </div>
+        </div>
+        <div>
+            <div th:if="${errorPart != null}">
+                <div th:value="${errorPart}"
+                     th:text="#{part.errorPartA} + ${#strings.capitalize(#strings.toLowerCase(errorPart))} + ' ' + #{part.errorPartB}"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Part Home-->
+    <div th:if="${pageTotalPart.size() > 0}">
+        <div>
+            <div class="message-home" th:text="#{home.yourPart}">Lass add parts
+            </div>
+        </div>
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{part.id}">ID</td>
+                <td th:text="#{part.number}">Number</td>
+                <td th:text="#{part.description}">>Description</td>
+                <td th:text="#{part.type}">Type</td>
+                <td th:text="#{part.sort}">Sort</td>
+                <td th:text="#{part.date}">Date</td>
+                <td th:text="#{part.manufacturer}">Manufacturer</td>
+                <td>
+                    <!--                    <img th:src="@{/images/delete.png}"/>-->
+                </td>
+
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="part: ${partHomeList}">
+                <td th:text="${part.id}">ID</td>
+                <td th:text="${part.partNumber}">partNumber</td>
+                <td th:text="${part.description}">description</td>
+                <td th:text="${part.type}">type</td>
+                <td th:text="${part.sort}">sort</td>
+                <td th:text="${part.createPartDate}">createPartDate</td>
+                <td th:text="${part.manufacturer}">manufacturer</td>
+                <td class="table custom-td">
+                    <div class="box-edit">
+                        <!--                        <form th:action="@{/part-edit/{id}(id=${part.id})}" th:method="post">-->
+                        <!--                            <input type="image" class="icons-table" th:src="@{/images/edit.png}">-->
+                        <!--                        </form>-->
+                        <div>
+                            <a class="a-image" th:href="@{/part-edit/{id}(id=${part.id})}">
+                                <img class="icons-table" th:src="@{/images/edit.png}"></a>
+                        </div>
+                        <form th:action="@{/part-delete/{id}(id=${part.id})}" th:method="post">
+                            <input type="image" class="icons-table" th:src="@{/images/delete.png}">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--        pagination-form-->
+        <div class="pagination-form">
+                <span class="pagination-text" th:each="pagePart : ${pageTotalPart}">
+                    <a th:href="@{/cabinet(pagePart=${pagePart}, sizePart=${selPartSize}, pageDoc=${pageDoc}, sizeDoc=${selDocSize})}"
+                       th:text="${pagePart}"></a>
+                </span>
+            <div class="pagination-row">
+                <select class="pagination-option" id="pageSizeSelect">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                            th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selPartSize}"></option>
+                </select>
+            </div>
+        </div>
+        <!--        pagination-form-->
+    </div>
+
+    <span></span>
+    <br>
+
+    <!--    Document Home-->
+    <div th:if="${pageTotalDoc.size() > 0}">
+        <div>
+            <div class="message-home" th:text="#{home.yourDocument}">Your parts</div>
+        </div>
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{document.number}">Number</td>
+                <td th:text="#{document.docType}">>Description</td>
+                <td th:text="#{document.user}">User</td>
+                <td th:text="#{document.date}">Data</td>
+                <!--                <td th:text="#{document.version}">Version</td>-->
+                <td></td>
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="document: ${documentHomeList}">
+                <td>
+                    <div>
+                        <a class="a-image" th:href="@{/docpart-detail/{id}(id=${document.id})}"
+                           th:text="${document.number}">
+                        </a>
+                    </div>
+                </td>
+                <td th:text="${document.docTypeName}">description</td>
+                <td th:text="${document.firstName + ' ' + document.lastName}">Creator</td>
+                <td th:text="${document.createDocDate}">Data</td>
+                <!--                <td th:text="${document.version}">Version</td>-->
+                <td class="table custom-td">
+                    <div class="box-edit">
+                        <div>
+                            <a class="a-image" th:href="@{/document-edit/{id}(id=${document.id})}">
+                                <img class="icons-table" th:src="@{/images/edit.png}"></a>
+                        </div>
+                        <form sec:authorize="hasAnyAuthority('admin')"
+                              th:action="@{/document-delete/{id}(id=${document.id})}" th:method="post">
+                            <input type="image" class="icons-table" th:src="@{/images/delete.png}">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--        pagination-form-->
+        <div class="pagination-form">
+                <span class="pagination-text" th:each="pageDoc : ${pageTotalDoc}">
+                    <a th:href="@{/cabinet(pagePart=${pagePart}, sizePart=${selPartSize}, pageDoc=${pageDoc}, sizeDoc=${selDocSize})}"
+                       th:text="${pageDoc}"></a>
+                </span>
+            <div class="pagination-row">
+                <select class="pagination-option" id="pageSizeSelectDoc">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                            th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selDocSize}"></option>
+                </select>
+            </div>
+        </div>
+        <!--        pagination-form-->
+
+    </div>
+
+</div>
+<!--Footer-->
+<div th:insert="~{footer}"></div>
+<!--Footer-->
+
+<script
+        src="https://code.jquery.com/jquery-1.11.1.min.js"
+        integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="
+        crossorigin="anonymous"></script>
+
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    jQuery.query = {spaces: false, hash: true, prefix: false};
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.query-object.js}"></script>
+
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        changePageAndSize();
+        changePageAndSizeDoc();
+    });
+
+    function changePageAndSize() {
+        $('#pageSizeSelect').change(function (evt) {
+            window.location.search = jQuery.query.set("sizePart", this.value);
+        });
+    }
+
+    function changePageAndSizeDoc() {
+        $('#pageSizeSelectDoc').change(function (evt) {
+            window.location.search = jQuery.query.set("sizeDoc", this.value);
+        });
+    }
+
+</script>
+
+
+</body>
+</html>

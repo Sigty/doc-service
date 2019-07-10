@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabinet</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/cabinet.css}">
+    <script type="text/javascript" th:src="@{/js/changeRole.js}"></script>
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div class="container">
+    <div>
+        <div class="errorSing">
+            <div th:if="${error != null}">
+                <div th:value="${error}"
+                     th:text="${#strings.capitalize(#strings.toLowerCase(error))}+#{singin.error}"></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="message-home" th:text="#{home.documents}">Your parts</div>
+    </div>
+    <!--    Document Home-->
+    <div th:if="docPartByDocument !=null">
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{document.id}">1</td>
+                <td th:text="#{part.number}">2</td>
+                <td th:text="#{part.description}">>3</td>
+                <td th:text="#{part.type}">4</td>
+                <td th:text="#{part.sort}">5</td>
+                <td th:text="#{part.manufacturer}">6</td>
+                <td th:text="#{document.version}">8</td>
+                <td th:text="#{part.quantity}">7</td>
+                <!--                <td th:text="#{document.version}">Version</td>-->
+                <td></td>
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="part: ${docPartByDocument}">
+                <td th:text="${part.partId}">1</td>
+                <td th:text="${part.partNumber}">2</td>
+                <td th:text="${part.description}">3</td>
+                <td th:text="${part.type}">4</td>
+                <td th:text="${part.sort}">5</td>
+                <td th:text="${part.manufacturer}">6</td>
+                <td th:text="${part.version}">Version</td>
+                <td>
+                    <div class="edit-td">
+                        <div class="edit-form">
+                            <div class="aq" style="display: inline-block;"
+                                 th:text="${part.quantityPart}"></div>
+                            <div th:id="${part.partId}" style="display: none;">
+                                <form th:action="@{/docpart-edit/}" th:method="post">
+                                    <!--                            <label for="f_name" class="sr-only"-->
+                                    <!--                                   th:text="#{part.quantity}">First Name</label>-->
+                                    <input type="number" id="f_name" th:value="${quantityParts}" th:name="quantityParts"
+                                           th:placeholder="#{part.quantity}"
+                                           class="input-q" required>
+                                    <input type="hidden" th:value="${part.docId}" th:name="docId"/>
+                                    <input type="hidden" th:value="${part.partId}" th:name="partId"/>
+                                    <button type="submit" class="button-ok" th:text="#{user.change}">Отправить</button>
+                                </form>
+                            </div>
+                            <div class="rmode text-name" th:href="@{/docpart-detail}">
+                                <input type="image" class="icons-table" th:src="@{/images/edit.png}"
+                                       th:onclick="'disp(document.getElementById(\'' + ${part.partId} + '\'));'">
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+                <td class="table custom-td">
+                    <div class="box-edit">
+                        <form sec:authorize="hasAnyAuthority('admin')"
+                              th:action="@{/docpart-delete/{id}(id=${part.partId})}" th:method="post">
+                            <input type="hidden" th:value="${part.docId}" name="docId"/>
+                            <input type="image" class="icons-table" th:src="@{/images/delete.png}">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--        pagination-form-->
+        <div class="pagination-form">
+                <span class="pagination-text" th:each="pageDoc : ${pageTotalDoc}">
+                    <a th:href="@{/docpart-detail/${id}(pageDoc=${pageDoc}, sizeDoc=${selDocSize})}"
+                       th:text="${pageDoc}"></a>
+                    <!--                    <a th:href="@{/cabinet(pagePart=${pagePart})}"-->
+                    <!--                       th:text="${pagePart}"></a>-->
+                </span>
+            <div class="pagination-row">
+                <select class="pagination-option" id="pageSizeSelect">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                            th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selDocSize}"></option>
+                </select>
+            </div>
+        </div>
+        <!--        pagination-form-->
+
+        <div class="change-block">
+
+            <form th:action="@{/docpart-add/{id}(id=${id})}" th:method="post">
+                <input type="number" th:value="${quantityPartsAdd}" th:name="quantityAdd"
+                       th:placeholder="#{part.quantity}"
+                       class="input-q" required>
+                <select class="option-change"
+                        th:value="${part}" th:name="part">
+                    <!--                        th:field="*{part}">-->
+
+                    <option th:each="part: ${allPart}"
+                            th:text="${part.partNumber}+' '+${part.description}+' '+${part.manufacturer}"
+                            th:value="${part.id}">Role
+                    </option>
+                </select>
+                <button type="submit" class="button-submit" th:text="#{user.change}">Отправить</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<!--Footer-->
+<div th:insert="~{footer}"></div>
+<!--Footer-->
+
+<script
+        src="https://code.jquery.com/jquery-1.11.1.min.js"
+        integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="
+        crossorigin="anonymous"></script>
+
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    jQuery.query = {spaces: false, hash: true, prefix: false};
+</script>
+
+<script type="text/javascript" th:src="@{/js/jquery.query-object.js}"></script>
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        changePageAndSize();
+    });
+
+    function changePageAndSize() {
+        $('#pageSizeSelect').change(function (evt) {
+            window.location.search = jQuery.query.set("sizeDoc", this.value);
+        });
+    }
+
+</script>
+
+</body>
+</html>

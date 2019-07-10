@@ -1,8 +1,9 @@
 package com.itacademy.database.repository;
 
-import com.itacademy.database.dto.LoginDTO;
+import com.itacademy.database.dto.LoginDto;
 
-public interface ExtendedUserRepository {
+public interface ExtendedUserRepository  {
 
-    LoginDTO findByLogin(String login);
+    LoginDto findByLogin(String login);
+
 }

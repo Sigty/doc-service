@@ -13,13 +13,11 @@
         <property name="format_sql">true</property>
 
         <mapping class="com.itacademy.database.entity.User"/>
-        <mapping class="com.itacademy.database.entity.UserDetail"/>
+        <mapping class="com.itacademy.database.entity.UserSpecialty"/>
         <mapping class="com.itacademy.database.entity.Role"/>
-        <mapping class="com.itacademy.database.entity.Department"/>
         <mapping class="com.itacademy.database.entity.Part"/>
         <mapping class="com.itacademy.database.entity.Manufacturer"/>
         <mapping class="com.itacademy.database.entity.Document"/>
-        <mapping class="com.itacademy.database.entity.Project"/>
         <mapping class="com.itacademy.database.entity.DocType"/>
         <mapping class="com.itacademy.database.entity.DocPart"/>
         <mapping class="com.itacademy.database.entity.Detail"/>
