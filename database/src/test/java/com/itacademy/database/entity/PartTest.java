@@ -1,44 +1,59 @@
 package com.itacademy.database.entity;
 
-import com.itacademy.database.dao.PartDao;
-import com.itacademy.database.util.SessionManager;
-import static com.itacademy.database.util.SessionManager.getSession;
-import com.itacademy.database.util.UserTestDataImport;
+import com.itacademy.database.config.TestConfig;
+import com.itacademy.database.repository.ManufacturerRepository;
+import com.itacademy.database.repository.PartRepository;
+import com.itacademy.database.repository.UserRepository;
+import com.itacademy.database.util.DatabaseHelper;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = TestConfig.class)
+@Transactional
+@Rollback
+@Sql("classpath:doc-service_dml.sql")
 public class PartTest {
 
-    private static SessionFactory sessionFactory = SessionManager.getFactory();
-    private final PartDao partDao = PartDao.getInstance();
+    @Autowired
+    private DatabaseHelper databaseHelper;
 
-    @BeforeClass
-    public static void prepare() {
-        UserTestDataImport.getInstance().importUserData(sessionFactory);
+    @Before
+    public void init() {
+        databaseHelper.cleanDatabase();
     }
 
-    @AfterClass
-    public static void clear() {
-        sessionFactory.close();
-    }
+    @Autowired
+    private PartRepository partRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ManufacturerRepository manufacturerRepository;
 
     /**
      * Test get all part.
      */
     @Test
     public void getAllPartTest() {
-        List<Part> result = partDao.getAll();
-        int expectedSize = 2;
-        assertEquals(expectedSize, result.size());
+        List<String> sort = partRepository.findAllSort();
+        int expectedSize = 4;
+        assertEquals(expectedSize, sort.size());
     }
 
     /**
@@ -46,12 +61,8 @@ public class PartTest {
      */
     @Test
     public void findByIdPartTest() {
-        try (Session session = getSession()) {
-            session.beginTransaction();
-            Optional<Part> result = partDao.get(1);
-            assertNotNull(result);
-            session.getTransaction().commit();
-        }
+        Optional<Part> result = partRepository.findById(1);
+        assertNotNull(result);
     }
 
     /**
@@ -59,19 +70,17 @@ public class PartTest {
      */
     @Test
     public void savePartTest() {
-        try (Session session = getSession()) {
-            Part part = Part.builder()
-                    .partNumber("partNumber")
-                    .description("description")
-                    .type("type")
-                    .sort("sort")
-                    .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
-                    .partUser(session.get(User.class, 1))
-                    .manufacturer(session.get(Manufacturer.class, 1))
-                    .build();
-            partDao.save(part);
-            assertTrue(partDao.get(part.getId()).isPresent());
-        }
+        Part part = Part.builder()
+                .partNumber("partNumber")
+                .description("description")
+                .type("type")
+                .sort("sort")
+                .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
+                .partUser(userRepository.findByLoginOrderByLogin("van"))
+                .manufacturer(manufacturerRepository.findByName("murata").get())
+                .build();
+        partRepository.save(part);
+        assertTrue(partRepository.findById(part.getId()).isPresent());
     }
 
     /**
@@ -79,47 +88,49 @@ public class PartTest {
      */
     @Test
     public void saveAndDelPartTest() {
-        try (Session session = getSession()) {
-            Part part = Part.builder()
-                    .partNumber("partNumber2")
-                    .description("description")
-                    .type("type")
-                    .sort("sort")
-                    .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
-                    .partUser(session.get(User.class, 1))
-                    .manufacturer(session.get(Manufacturer.class, 1))
-                    .build();
-            partDao.save(part);
-            assertTrue(partDao.get(part.getId()).isPresent());
-            partDao.delete(part);
-            int expectedSize = 2;
-            List<Part> result = partDao.getAll();
-            assertEquals(expectedSize, result.size());
-        }
+
+        Part part = Part.builder()
+                .partNumber("partNumber2")
+                .description("description")
+                .type("type")
+                .sort("sort")
+                .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
+                .partUser(userRepository.findByLoginOrderByLogin("van"))
+                .manufacturer(manufacturerRepository.findByName("murata").get())
+                .build();
+        partRepository.save(part);
+        assertTrue(partRepository.findById(part.getId()).isPresent());
+        partRepository.delete(part);
+        int expectedSize = 21;
+        Iterable<Part> partIterable = partRepository.findAll();
+        List<Part> target = new ArrayList<>();
+        partIterable.forEach(target::add);
+        assertEquals(expectedSize, target.size());
     }
+
 
     /**
      * Test update part.
      */
-    @Test
-    public void updatePartTest() {
-        try (Session session = getSession()) {
-            Part part = Part.builder()
-                    .id(1)
-                    .partNumber("testPartNumber")
-                    .description("testDescription")
-                    .type("type")
-                    .sort("sort")
-                    .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
-                    .partUser(session.get(User.class, 1))
-                    .manufacturer(session.get(Manufacturer.class, 1))
-                    .build();
-            partDao.update(part);
-            List<Part> parts = partDao.getAll();
-            int expectedSize = 3;
-            assertEquals(expectedSize, parts.size());
-            Optional<Part> result = partDao.get(1);
-            assertEquals("testPartNumber", result.get().getPartNumber());
-        }
-    }
+//    @Test
+//    public void updatePartTest() {
+//
+//        Part part = Part.builder()
+//                .id(1)
+//                .partNumber("testPartNumber")
+//                .description("testDescription")
+//                .type("type")
+//                .sort("sort")
+//                .createPartDate(OffsetDateTime.parse("2019-05-03T01:02:03Z"))
+//                .partUser(userRepository.findByLoginOrderByLogin("van"))
+//                .manufacturer(manufacturerRepository.findByName("murata").get())
+//                .build();
+//        partRepository.update(part);
+//        List<Part> parts = partDao.getAll();
+//        int expectedSize = 3;
+//        assertEquals(expectedSize, parts.size());
+//        Optional<Part> result = partDao.get(1);
+//        assertEquals("testPartNumber", result.get().getPartNumber());
+//    }
+
 }

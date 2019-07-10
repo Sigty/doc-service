@@ -11,5 +11,13 @@
     <suppress files="Project_.java" checks="[a-zA-Z0-9]*" />
     <suppress files="Role_.java" checks="[a-zA-Z0-9]*" />
     <suppress files="User_.java" checks="[a-zA-Z0-9]*" />
-    <suppress files="UserDetail_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="UserSpecialty_.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="HomeController.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="PartController.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="UserController.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="DocumentRepository.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="ExtendedPartRepositoryImpl.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="PartRepository.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="PredicateUtil.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="DocumentController.java" checks="[a-zA-Z0-9]*" />
 </suppressions>

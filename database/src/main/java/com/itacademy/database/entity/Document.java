@@ -12,11 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 @Data
 @ToString(exclude = "docParts")
@@ -24,6 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Entity
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "document", schema = "doc_service")
 public class Document implements BaseEntity<Integer> {
 
@@ -45,7 +49,10 @@ public class Document implements BaseEntity<Integer> {
     @JoinColumn(name = "type_doc_id")
     private DocType docType;
 
+    @Version
+    @Column(name = "version")
+    private Long version;
+
     @OneToMany(mappedBy = "document")
     private Set<DocPart> docParts = new HashSet<>();
-
 }

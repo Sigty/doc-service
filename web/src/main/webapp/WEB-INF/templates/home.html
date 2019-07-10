@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div class="container">
+
+    <div>
+        <div class="message-home" th:text="#{home.lastPart}">Lass add parts</div>
+    </div>
+    <!--    Part Home-->
+    <div>
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{part.number}">Number</td>
+                <td th:text="#{part.description}">>Description</td>
+                <td th:text="#{part.type}">Type</td>
+                <!--                <td th:text="#{part.sort}">Sort</td>-->
+                <!--                <td th:text="#{part.date}">Date</td>-->
+                <td th:text="#{part.manufacturer}">Manufacturer</td>
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="part: ${partHomeList}">
+                <td th:text="${part.partNumber}">partNumber</td>
+                <td th:text="${part.description}">description</td>
+                <!--                <td th:text="${part.type}">type</td>-->
+                <!--                <td th:text="${part.sort}">sort</td>-->
+                <td th:text="${part.manufacturer}">manufacturer</td>
+                <td th:text="${part.createPartDate}">createPartDate</td>
+            </tr>
+        </table>
+    </div>
+
+    <span></span>
+    <br>
+    <div>
+        <div class="message-home" th:text="#{home.lastDocument}">Lass add parts</div>
+    </div>
+    <!--    Document Home-->
+    <div>
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{document.number}">Number</td>
+                <td th:text="#{document.docType}">>Description</td>
+                <td th:text="#{document.user}">Type</td>
+                <td th:text="#{document.date}">Sort</td>
+<!--                <td th:text="#{document.version}">Sort</td>-->
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="document: ${documentHomeList}">
+                <td th:text="${document.number}">partNumber</td>
+                <td th:text="${document.docTypeName}">description</td>
+                <td th:text="${document.firstName + ' ' + document.lastName}">type</td>
+                <td th:text="${document.createDocDate}">sort</td>
+<!--                <td th:text="${document.version}">sort</td>-->
+            </tr>
+        </table>
+    </div>
+
+</div>
+<!--Footer-->
+<div th:insert="~{footer}"></div>
+<!--Footer-->
+</body>
+</html>

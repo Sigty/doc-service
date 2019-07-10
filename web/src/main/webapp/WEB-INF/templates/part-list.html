@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part list</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+<!--Header-->
+<div th:insert="~{header}"></div>
+<!--Header-->
+<div class="container">
+    <h3> Part List </h3>
+    <h4 th:text="${noOfRecords}"> Find parts"</h4>
+    <!--    border="1"-->
+    <table class="blueTable">
+
+        <form th:action="@{/part-list}" th:method="get">
+            <td>
+                <input text="${partNumber}" value="" name="partNumber">
+            </td>
+            <td></td>
+
+            <td>
+                <select th:value="${type}" name="type">
+                    <option th:value="${type}" th:text="${type}">Type</option>
+                    <option th:each="type: ${typeList}"
+                            th:text="${type}"
+                            th:value="${type}">Type
+                    </option>
+                    <option value="">Reset</option>
+                </select>
+            </td>
+            <td>
+                <select th:value="${sort}" name="sort">
+                    <option th:value="${sort}" th:text="${sort}">Type</option>
+                    <option th:each="sort: ${sortList}"
+                            th:text="${sort}"
+                            th:value="${sort}">Sort
+                    </option>
+                    <option value="">Reset</option>
+                </select>
+            </td>
+            <td></td>
+            <td>
+                <select th:value="${manufacturer}" name="manufacturer">
+                    <option th:value="${manufacturer}" th:text="${manufacturer}">Type</option>
+                    <option th:each="manufacturer: ${manufacturerList}"
+                            th:text="${manufacturer}"
+                            th:value="${manufacturer}">Manufacturer
+                    </option>
+                    <option value="">Reset</option>
+                </select>
+            </td>
+            <input class="find" type="submit" th:value="#{part.find}">
+            <!--</div>-->
+        </form>
+
+        </tr>
+        <thead>
+        <tr>
+            <td th:text="#{part.number}">Number</td>
+            <td th:text="#{part.description}">>Description</td>
+            <td th:text="#{part.type}">Type</td>
+            <td th:text="#{part.sort}">Sort</td>
+            <td th:text="#{part.date}">Date</td>
+            <td th:text="#{part.manufacturer}">Manufacturer</td>
+        </tr>
+        </thead>
+        <tr></tr>
+        <tr th:each="part: ${partList}">
+            <td th:text="${part.partNumber}">partNumber</td>
+            <td th:text="${part.description}">description</td>
+            <td th:text="${part.type}">type</td>
+            <td th:text="${part.sort}">sort</td>
+            <td th:text="${part.createPartDate}">createPartDate</td>
+            <td th:text="${part.manufacturer}">manufacturer</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <span class="page-item" th:each="pageNumber : ${pageNumbers}">
+                     <span th:if="${partNumber != null}">
+                <a class="page-link"
+                   th:href="@{|/part-list?page=${pageNumber}&partNumber=${partNumber}&type=${type}&sort=${sort}&manufacturer=${manufacturer}|}"
+                   th:text=${pageNumber}>1</a>
+            </span>
+            <span th:if="${partNumber == null}">
+                <a class="page-link"
+                   th:href="@{|/part-list?page=${pageNumber}|}"
+                   th:text=${pageNumber}>1</a>
+            </span>
+            </span>
+
+            <!--            </span>-->
+        </tr>
+    </table>
+</div>
+<!--Footer-->
+<div th:insert="~{footer}"></div>
+<!--Footer-->
+</body>
+</html>

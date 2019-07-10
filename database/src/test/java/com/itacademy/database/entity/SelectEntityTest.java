@@ -1,17 +1,15 @@
 package com.itacademy.database.entity;
 
 import com.itacademy.database.config.TestConfig;
-import com.itacademy.database.repository.DepartmentRepository;
+import com.itacademy.database.util.DatabaseHelper;
 import com.itacademy.database.repository.DocPartRepository;
 import com.itacademy.database.repository.DocTypeRepository;
 import com.itacademy.database.repository.DocumentRepository;
 import com.itacademy.database.repository.ManufacturerRepository;
 import com.itacademy.database.repository.PartRepository;
-import com.itacademy.database.repository.ProjectRepository;
 import com.itacademy.database.repository.RoleRepository;
-import com.itacademy.database.repository.UserDetailRepository;
+import com.itacademy.database.repository.UserSpecialtyRepository;
 import com.itacademy.database.repository.UserRepository;
-import com.itacademy.database.util.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,16 +36,10 @@ public class SelectEntityTest {
     private RoleRepository roleRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
-
-    @Autowired
-    private UserDetailRepository userDetailRepository;
+    private UserSpecialtyRepository userDetailRepository;
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ProjectRepository projectRepository;
 
     @Autowired
     private ManufacturerRepository manufacturerRepository;
@@ -70,7 +62,6 @@ public class SelectEntityTest {
     @Before
     public void init() {
         databaseHelper.cleanDatabase();
-        //      databaseHelper.prepareData();
     }
 
     @Test
@@ -82,16 +73,8 @@ public class SelectEntityTest {
     }
 
     @Test
-    public void getAllDepartment() {
-        List<Department> allDepartments = new ArrayList<>();
-        departmentRepository.findAll().forEach(allDepartments::add);
-        int expectedSize = 3;
-        assertEquals(expectedSize, allDepartments.size());
-    }
-
-    @Test
     public void getDetailUser() {
-        Optional<UserDetail> userDetailId = userDetailRepository.findById(1);
+        Optional<UserSpecialty> userDetailId = userDetailRepository.findById(1);
         assertNotNull(userDetailId.isPresent());
         String expectedEmail = "ivanovi@gmail.com";
         assertEquals(expectedEmail, userDetailId.get().getEmail());
@@ -103,14 +86,6 @@ public class SelectEntityTest {
         userRepository.findAll().forEach(allUser::add);
         int expectedSize = 7;
         assertEquals(expectedSize, allUser.size());
-    }
-
-    @Test
-    public void getAllProject() {
-        List<Project> allProject = new ArrayList<>();
-        projectRepository.findAll().forEach(allProject::add);
-        int expectedSize = 3;
-        assertEquals(expectedSize, allProject.size());
     }
 
     @Test

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="base" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User list</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/cabinet.css}">
+    <script type="text/javascript" th:src="@{/js/changeRole.js}"></script>
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div class="container">
+
+    <div>
+        <div class="errorSing">
+            <div th:if="${error != null}">
+                <div th:value="${error}"
+                     th:text="${#strings.capitalize(#strings.toLowerCase(error))}+#{singin.error}"></div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <div class="message-home" th:text="#{user.yourList}">User list</div>
+        </div>
+        <table class="blueTable">
+            <thead>
+            <tr>
+                <td th:text="#{user.id}">ID</td>
+                <td th:text="#{user.login}">Number</td>
+                <td th:text="#{user.firstName}">>Description</td>
+                <td th:text="#{user.lastName}">Type</td>
+                <td th:text="#{user.email}">Sort</td>
+                <td class="table customUser-td" th:text="#{user.role}">Date</td>
+                <!--                <td>-->
+                <!--                    &lt;!&ndash;                    <img th:src="@{/images/delete.png}"/>&ndash;&gt;-->
+                <!--                </td>-->
+
+            </tr>
+            </thead>
+            <tr></tr>
+            <tr th:each="user: ${userList}">
+                <td th:text="${user.id}">ID</td>
+                <td th:text="${user.login}">partNumber</td>
+                <td th:text="${user.firstName}">description</td>
+                <td th:text="${user.lastName}">type</td>
+                <td th:text="${user.email}">sort</td>
+                <td class="table customUser-td">
+                    <div class="change-block">
+                        <input class="button-change" type="button" th:value="${user.role}"
+                               th:onclick="'disp(document.getElementById(\'' + ${user.id} + '\'));'"/>
+                        <form th:action="@{/user-changeRole/{id}(id=${user.id})}" th:method="post"
+                              th:id="${user.id}" style="display: none;">
+                            <select class="option-change" th:value="${role}" name="role">
+                                <option th:each="role: ${allRoleUser}"
+                                        th:text="${role}"
+                                        th:value="${role}">Role
+                                </option>
+                            </select>
+                            <button type="submit" class="button-submit" th:text="#{user.change}">Отправить</button>
+                        </form>
+                    </div>
+                </td>
+
+                </td>
+            </tr>
+        </table>
+        <!--        pagination-form-->
+        <div class="pagination-form">
+                <span class="pagination-text" th:each="pageList : ${pageTotalList}">
+                    <a th:href="@{/user-list(pageList=${pageList}, sizeList=${selListSize})}"
+                       th:text="${pageList}"></a>
+                </span>
+            <div class="pagination-row">
+                <select class="pagination-option" id="pageSizeSelect">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                            th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selListSize}"></option>
+                </select>
+            </div>
+        </div>
+        <!--        pagination-form-->
+    </div>
+    <!--Footer-->
+    <div th:insert="~{footer}"></div>
+    <!--Footer-->
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-1.11.1.min.js"
+        integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="
+        crossorigin="anonymous"></script>
+
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    jQuery.query = {spaces: false, hash: true, prefix: false};
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.query-object.js}"></script>
+
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        changePageAndSize();
+    });
+
+    function changePageAndSize() {
+        $('#pageSizeSelect').change(function (evt) {
+            window.location.search = jQuery.query.set("sizeList", this.value);
+        });
+    }
+
+</script>
+</body>
+</html>

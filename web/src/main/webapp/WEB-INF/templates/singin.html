@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Please sign in</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+</head>
+<body>
+<link rel="stylesheet" th:href="@{/css/singin.css}">
+<div class="container">
+    <form class="form-signin" th:action="@{/singin}" th:method="post" th:object="${registrationUserDto}" accept-charset="utf-8">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <p>
+            <label for="username" class="sr-only" th:text="#{user.login}">Username</label>
+            <input type="text" id="username" th:field="*{login}" name="username"
+                   pattern="^[A-Za-zА0-9]+$"
+                   class="form-control" th:placeholder="#{user.login}" required
+                   autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only" th:text="#{user.password}">Password</label>
+            <input type="password" id="password" th:field="*{password}" name="password"
+                   pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                   class="form-control" th:placeholder="#{user.password}" required>
+        </p>
+        <p>
+            <label for="f_name" class="sr-only" th:text="#{user.firstName}">First Name</label>
+            <input type="text" id="f_name" th:field="*{firstName}" name="f_name"
+                   pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                   th:placeholder="#{user.firstName}"
+                   class="form-control" required>
+        </p>
+        <p>
+            <label for="n_name" class="sr-only" th:text="#{user.lastName}">Last Name</label>
+            <input type="text" id="n_name" th:field="*{lastName}" name="f_name"
+                   pattern="^[A-Za-zА-Яа-яЁё0-9]+$"
+                   th:placeholder="#{user.lastName}"
+                   class="form-control" required>
+        </p>
+        <p>
+            <label for="e_mail" class="sr-only" th:text="#{user.email}">E-mail</label>
+            <input type="email" id="e_mail" th:field="*{email}" name="email"
+                   pattern="^[a-zA-Z0-9\-_]+@[a-z]+\.[a-z]+$"
+                   th:placeholder="#{user.email}"
+                   class="form-control" required>
+        </p>
+        <input name="_csrf" type="hidden" value="337369bb-460d-4071-aee0-dd53ffb09376"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{singin.singin}">Sign in</button>
+        <a class="btn btn-lg btn-primary btn-block" th:href="@{/home}" th:text="#{singin.back}">Back</a>
+    </form>
+    <div>
+        <div class="errorSing">
+            <div th:if="${error != ''}">
+                <div th:value="${error}"
+                     th:text="${#strings.capitalize(#strings.toLowerCase(error))}+#{singin.error}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

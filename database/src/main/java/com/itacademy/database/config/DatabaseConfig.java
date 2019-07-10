@@ -18,8 +18,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan("com.itacademy.database")
 @PropertySource({"classpath:database.properties", "classpath:hibernate.properties"})
+@ComponentScan("com.itacademy.database.converter")
 @EnableJpaRepositories(basePackages = "com.itacademy.database.repository")
 @EnableTransactionManagement
 public class DatabaseConfig {
