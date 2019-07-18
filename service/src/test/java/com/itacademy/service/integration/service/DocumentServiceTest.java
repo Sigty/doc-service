@@ -30,7 +30,7 @@ public class DocumentServiceTest {
     public void deleteDocumentById() {
 
         Page<DocumentMidDto> allDoc = documentService.findAllDocByOrderByDateDesc(Pageable.unpaged());
-        documentService.deleteDocumentById(36);
+        documentService.deleteDocumentById(35);
         Page<DocumentMidDto> allDocTarget = documentService.findAllDocByOrderByDateDesc(Pageable.unpaged());
         assertTrue(allDoc.getTotalElements() >= allDocTarget.getTotalElements());
     }
