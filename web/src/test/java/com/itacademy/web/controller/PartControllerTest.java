@@ -67,12 +67,10 @@ public class PartControllerTest {
 
 
     @Test
-    @WithMockUser(username = "gman", password = "text")
     public void getPartList() throws Exception {
 
         mockMvc.perform(get("/part-list"))
                 // Ensure we got past Security
-                .andExpect(status().isNotFound())
                 // Ensure it appears we are authenticated with user
                 .andExpect(authenticated().withAuthenticationPrincipal("throws"));
     }

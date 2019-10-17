@@ -19,21 +19,21 @@ CREATE TABLE doc_service.role
     role VARCHAR(16) UNIQUE NOT NULL
 );
 
-CREATE TABLE doc_service.user_detail
+CREATE TABLE doc_service.user_specialty
 (
-    id            SERIAL PRIMARY KEY,
-    firstname     VARCHAR(64)        NOT NULL,
-    lastname      VARCHAR(64)        NOT NULL,
-    email         VARCHAR(64) UNIQUE NOT NULL
+    id        SERIAL PRIMARY KEY,
+    firstname VARCHAR(64)        NOT NULL,
+    lastname  VARCHAR(64)        NOT NULL,
+    email     VARCHAR(64) UNIQUE NOT NULL
 );
 
 CREATE TABLE doc_service.user
 (
     id             SERIAL PRIMARY KEY,
-    login          VARCHAR(32) UNIQUE                              NOT NULL,
-    password       VARCHAR(32)                                     NOT NULL,
+    login          VARCHAR(32) UNIQUE                                 NOT NULL,
+    password       VARCHAR(32)                                        NOT NULL,
     detail_user_id INTEGER REFERENCES doc_service.user_specialty (id) NOT NULL,
-    role_id        INTEGER REFERENCES doc_service.role (id)        NOT NULL DEFAULT 1
+    role_id        INTEGER REFERENCES doc_service.role (id)           NOT NULL DEFAULT 1
 );
 
 CREATE TABLE doc_service.manufacturer
@@ -60,7 +60,8 @@ CREATE TABLE doc_service.document
     number          VARCHAR(32) UNIQUE       NOT NULL,
     create_doc_date TIMESTAMP WITH TIME ZONE NOT NULL,
     type_doc_id     INTEGER REFERENCES doc_service.doc_type (id),
-    user_id         INTEGER REFERENCES doc_service.user (id)
+    user_id         INTEGER REFERENCES doc_service.user (id),
+    version         BIGINT
 );
 
 
@@ -69,6 +70,7 @@ CREATE TABLE doc_service.doc_part
 (
     doc_id        INTEGER REFERENCES doc_service.document (id),
     part_id       INTEGER REFERENCES doc_service.part (id),
+    version       BIGINT,
     quantity_part INTEGER NOT NULL,
     PRIMARY KEY (doc_id, part_id)
 );
